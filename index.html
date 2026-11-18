@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irsyad Store - Top Up Game Instant & Terpercaya</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        cyber: ['Orbitron', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0d1117',
+                            card: '#161b22',
+                            border: '#30363d',
+                            cyan: '#00f0ff',
+                            purple: '#a855f7',
+                            pink: '#ec4899',
+                            gold: '#eab308'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #f0f6fc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Particle Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f0ff;
+        }
+
+        /* Modal Animation */
+        .modal-fade {
+            animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes modalPop {
+            0% { opacity: 0; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Pulse Floating Animation */
+        .floating-btn {
+            animation: floatPulse 2.5s infinite ease-in-out;
+        }
+        @keyframes floatPulse {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.03); }
+        }
+
+        /* Mode terang: seluruh tampilan memakai warna biru muda */
+        body.light-mode {
+            background-color: #dff3ff !important;
+            color: #164e80 !important;
+        }
+        body.light-mode .bg-brand-dark,
+        body.light-mode .bg-brand-dark\/80,
+        body.light-mode .bg-brand-dark\/85 {
+            background-color: #d6efff !important;
+        }
+        body.light-mode .bg-brand-card,
+        body.light-mode .bg-brand-card\/80 {
+            background-color: #c5e7ff !important;
+        }
+        body.light-mode header,
+        body.light-mode footer {
+            background-color: #d6efff !important;
+        }
+        body.light-mode .border-brand-border {
+            border-color: #8fcaf2 !important;
+        }
+        body.light-mode .text-white {
+            color: #15558a !important;
+        }
+        body.light-mode .text-gray-300,
+        body.light-mode .text-gray-400 {
+            color: #286b9f !important;
+        }
+        body.light-mode .text-gray-500 {
+            color: #397dae !important;
+        }
+        body.light-mode .bg-gradient-to-r {
+            background-image: linear-gradient(to right, #c5e7ff, #dff3ff, #c5e7ff) !important;
+        }
+        body.light-mode input,
+        body.light-mode select,
+        body.light-mode textarea {
+            color: #164e80 !important;
+            background-color: #eaf7ff !important;
+            border-color: #8fcaf2 !important;
+        }
+        body.light-mode input::placeholder,
+        body.light-mode textarea::placeholder {
+            color: #5b91b8 !important;
+        }
+        body.light-mode #themeToggle {
+            background-color: #b9e2ff !important;
+            color: #15558a !important;
+            border-color: #8fcaf2 !important;
+        }
+        /* Pastikan seluruh tulisan terlihat jelas saat mode terang */
+        body.light-mode * {
+            color: #123f63 !important;
+            -webkit-text-fill-color: #123f63 !important;
+        }
+        /* Warna bintang rating tetap terlihat saat mode terang */
+        body.light-mode .star-btn,
+        body.light-mode .star-btn i {
+            color: #64748b !important;
+            -webkit-text-fill-color: #64748b !important;
+        }
+        body.light-mode .star-btn.text-brand-gold,
+        body.light-mode .star-btn.text-brand-gold i {
+            color: #d18a00 !important;
+            -webkit-text-fill-color: #d18a00 !important;
+        }
+
+        /* Mode gelap tetap menggunakan warna asli */
+        body:not(.light-mode) {
+            background-color: #0d1117;
+            color: #f0f6fc;
+        }
+
+        /* Background animasi (mode gelap & mode terang) */
+        .bg-anim {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            background: linear-gradient(120deg, rgba(0, 240, 255, 0.06), rgba(168, 85, 247, 0.10), rgba(236, 72, 153, 0.06), rgba(0, 240, 255, 0.06));
+            background-size: 300% 300%;
+            animation: bgShift 16s ease infinite;
+        }
+        .bg-anim span {
+            position: absolute;
+            border-radius: 9999px;
+            filter: blur(80px);
+            opacity: 0.35;
+            animation: orbFloat 18s ease-in-out infinite;
+        }
+        .bg-anim span:nth-child(1) {
+            width: 420px; height: 420px; top: -80px; left: -80px;
+            background: #00f0ff;
+        }
+        .bg-anim span:nth-child(2) {
+            width: 480px; height: 480px; bottom: -120px; right: -100px;
+            background: #a855f7;
+            animation-delay: -6s;
+            animation-duration: 22s;
+        }
+        .bg-anim span:nth-child(3) {
+            width: 360px; height: 360px; top: 40%; left: 45%;
+            background: #ec4899;
+            opacity: 0.2;
+            animation-delay: -12s;
+            animation-duration: 26s;
+        }
+        body.light-mode .bg-anim {
+            background: linear-gradient(120deg, rgba(70, 150, 215, 0.40), rgba(110, 175, 230, 0.35), rgba(60, 135, 205, 0.40), rgba(70, 150, 215, 0.40));
+            background-size: 300% 300%;
+        }
+        body.light-mode .bg-anim span:nth-child(1) { background: #3b9ae0; opacity: 0.35; }
+        body.light-mode .bg-anim span:nth-child(2) { background: #4a86d6; opacity: 0.35; }
+        body.light-mode .bg-anim span:nth-child(3) { background: #7fb6e8; opacity: 0.25; }
+        /* Lapisan gerak tambahan: grid berjalan & kilau menyapu */
+        .bg-anim::before {
+            content: '';
+            position: absolute;
+            inset: -60px;
+            background-image:
+                linear-gradient(rgba(0, 240, 255, 0.09) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 85, 247, 0.09) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 12s linear infinite;
+        }
+        .bg-anim::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 40%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.10), rgba(236, 72, 153, 0.08), transparent);
+            transform: rotate(20deg);
+            animation: sweepMove 10s ease-in-out infinite;
+        }
+        body.light-mode .bg-anim::before {
+            background-image:
+                linear-gradient(rgba(30, 100, 175, 0.16) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 100, 175, 0.16) 1px, transparent 1px);
+        }
+        body.light-mode .bg-anim::after {
+            background: linear-gradient(90deg, transparent, rgba(40, 120, 200, 0.18), transparent);
+        }
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+        @keyframes sweepMove {
+            0% { left: -60%; }
+            100% { left: 130%; }
+        }
+        @keyframes bgShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(80px, 60px) scale(1.15); }
+            66% { transform: translate(-60px, 90px) scale(0.9); }
+        }
+
+        /* Animasi notifikasi Saran & Kritik */
+        .feedback-toast {
+            position: fixed;
+            top: 96px;
+            right: 20px;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: min(320px, calc(100vw - 40px));
+            padding: 14px 18px;
+            border-radius: 16px;
+            background: #161b22;
+            border: 1px solid rgba(0, 240, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.25);
+            transform: translateX(130%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .feedback-toast.show {
+            animation: toastIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards, toastOut 0.4s ease-in 3.2s forwards;
+        }
+        .feedback-toast .toast-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 9999px;
+            background: linear-gradient(to top right, #ec4899, #a855f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            animation: toastPop 0.6s ease 0.3s both;
+        }
+        .feedback-toast .toast-bar {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 100%;
+            border-radius: 0 0 16px 16px;
+            background: linear-gradient(to right, #00f0ff, #ec4899);
+            transform-origin: left;
+        }
+        .feedback-toast.show .toast-bar {
+            animation: toastBar 3.6s linear forwards;
+        }
+        @keyframes toastIn {
+            0% { transform: translateX(130%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes toastOut {
+            0% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(130%); opacity: 0; }
+        }
+        @keyframes toastPop {
+            0% { transform: scale(0) rotate(-90deg); }
+            70% { transform: scale(1.25) rotate(10deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+        @keyframes toastBar {
+            0% { transform: scaleX(1); }
+            100% { transform: scaleX(0); }
+        }
+        .feedback-new {
+            animation: feedbackGlow 1.8s ease-out;
+        }
+        @keyframes feedbackGlow {
+            0% { transform: translateY(-14px); opacity: 0; box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.7); }
+            30% { transform: translateY(0); opacity: 1; box-shadow: 0 0 0 6px rgba(0, 240, 255, 0.35); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+        }
+
+
+        /* ===== ANIMASI TAMBAHAN (Toko Top Up Game) ===== */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideDownIn { from { opacity: 0; transform: translateY(-100%); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+        @keyframes overlayFade { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes glowPulse { 0%, 100% { box-shadow: 0 10px 15px -3px rgba(0, 240, 255, 0.2); } 50% { box-shadow: 0 0 28px rgba(0, 240, 255, 0.55); } }
+        @keyframes starPop { 0% { transform: scale(1); } 50% { transform: scale(1.5) rotate(15deg); } 100% { transform: scale(1); } }
+        @keyframes selectPop { 0% { transform: scale(1); } 50% { transform: scale(1.06); } 100% { transform: scale(1); } }
+        @keyframes iconPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.14); } }
+
+        /* Header & Hero */
+        header { animation: slideDownIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+        header + section { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards; }
+        header + section .lg\:col-span-8 > * { animation: fadeUp 0.7s ease backwards; }
+        header + section .lg\:col-span-8 > *:nth-child(1) { animation-delay: 0.25s; }
+        header + section .lg\:col-span-8 > *:nth-child(2) { animation-delay: 0.4s; }
+        header + section .lg\:col-span-8 > *:nth-child(3) { animation-delay: 0.55s; }
+        header + section .lg\:col-span-8 > *:nth-child(4) { animation-delay: 0.7s; }
+        header + section .lg\:col-span-4 > div {
+            animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        header + section .lg\:col-span-4 > div:nth-child(1) { animation-delay: 0.45s; }
+        header + section .lg\:col-span-4 > div:nth-child(2) { animation-delay: 0.55s; }
+        header + section .lg\:col-span-4 > div:nth-child(3) { animation-delay: 0.65s; }
+        header + section .lg\:col-span-4 > div:nth-child(4) { animation-delay: 0.75s; }
+        header + section .lg\:col-span-4 > div:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0, 240, 255, 0.15); }
+        header + section .lg\:col-span-4 > div > i { animation: iconPulse 2.8s ease-in-out infinite; }
+        header + section .lg\:col-span-4 > div:nth-child(2) > i { animation-delay: 0.4s; }
+        header + section .lg\:col-span-4 > div:nth-child(3) > i { animation-delay: 0.8s; }
+        header + section .lg\:col-span-4 > div:nth-child(4) > i { animation-delay: 1.2s; }
+        header + section a[href^="#"]:hover { transform: translateY(-3px); }
+
+        /* Teks gradien bergerak (logo & judul) */
+        .bg-clip-text { background-size: 200% 100%; animation: gradientShift 6s ease infinite; }
+
+        /* Tombol tema */
+        #themeToggle i { transition: transform 0.35s ease; }
+        #themeToggle:hover i { transform: rotate(25deg) scale(1.15); }
+
+        /* Muncul saat di-scroll (kelas ditambah lewat JS) */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.in-view { opacity: 1; transform: none; }
+
+        /* Kartu game */
+        #gameGrid > div { animation: fadeUp 0.5s ease backwards; }
+        #gameGrid > div:nth-child(1) { animation-delay: 0.05s; }
+        #gameGrid > div:nth-child(2) { animation-delay: 0.09s; }
+        #gameGrid > div:nth-child(3) { animation-delay: 0.13s; }
+        #gameGrid > div:nth-child(4) { animation-delay: 0.17s; }
+        #gameGrid > div:nth-child(5) { animation-delay: 0.21s; }
+        #gameGrid > div:nth-child(6) { animation-delay: 0.25s; }
+        #gameGrid > div:nth-child(7) { animation-delay: 0.29s; }
+        #gameGrid > div:nth-child(8) { animation-delay: 0.33s; }
+        #gameGrid > div:nth-child(9) { animation-delay: 0.37s; }
+        #gameGrid > div:nth-child(10) { animation-delay: 0.41s; }
+        #gameGrid > div:nth-child(11) { animation-delay: 0.45s; }
+        #gameGrid > div:nth-child(12) { animation-delay: 0.49s; }
+        #gameGrid > div:nth-child(13) { animation-delay: 0.53s; }
+        #gameGrid > div:nth-child(14) { animation-delay: 0.57s; }
+        #gameGrid > div:nth-child(15) { animation-delay: 0.61s; }
+        #gameGrid > div:nth-child(n+16) { animation-delay: 0.65s; }
+
+        /* Input & form */
+        input[type="text"], select, textarea { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        input[type="text"]:focus, select:focus, textarea:focus { box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.18); }
+
+        /* Bintang rating */
+        .star-btn { transition: color 0.15s ease, transform 0.2s ease; }
+        .star-btn:hover { transform: scale(1.25); }
+        .star-btn.text-brand-gold i { animation: starPop 0.4s ease; }
+        button[onclick="submitFeedback()"]:hover { transform: translateY(-2px); }
+        button[onclick="submitFeedback()"] { transition: transform 0.2s ease, filter 0.2s ease; }
+
+        /* Daftar ulasan */
+        #customerFeedbackList > div { transition: transform 0.25s ease, border-color 0.25s ease; }
+        #customerFeedbackList > div:hover { transform: translateX(4px); border-color: rgba(0, 240, 255, 0.5); }
+        #customerFeedbackList > div:not(.feedback-new) { animation: fadeUp 0.5s ease backwards; }
+        #customerFeedbackList > div:nth-child(1) { animation-delay: 0.05s; }
+        #customerFeedbackList > div:nth-child(2) { animation-delay: 0.11s; }
+        #customerFeedbackList > div:nth-child(3) { animation-delay: 0.17s; }
+        #customerFeedbackList > div:nth-child(4) { animation-delay: 0.23s; }
+        #customerFeedbackList > div:nth-child(5) { animation-delay: 0.29s; }
+        #customerFeedbackList > div:nth-child(6) { animation-delay: 0.35s; }
+        #customerFeedbackList > div:nth-child(7) { animation-delay: 0.41s; }
+        #customerFeedbackList > div:nth-child(8) { animation-delay: 0.47s; }
+        #customerFeedbackList > div:nth-child(n+9) { animation-delay: 0.50s; }
+
+        /* Footer */
+        footer button:hover { transform: translateY(-3px); }
+
+        /* Modal top up */
+        #topUpModal:not(.hidden), #redirectModal:not(.hidden) { animation: overlayFade 0.25s ease backwards; }
+        #modalGameIcon { animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards; }
+        #topUpForm > div { animation: fadeUp 0.45s ease backwards; }
+        #topUpForm > div:nth-child(1) { animation-delay: 0.05s; }
+        #topUpForm > div:nth-child(2) { animation-delay: 0.15s; }
+        #topUpForm > div:nth-child(3) { animation-delay: 0.25s; }
+        #nominalGrid > label, #topUpForm .grid:not(#nominalGrid) > label { animation: popIn 0.35s ease backwards; }
+        #nominalGrid > label:nth-child(1) { animation-delay: 0.20s; }
+        #nominalGrid > label:nth-child(2) { animation-delay: 0.23s; }
+        #nominalGrid > label:nth-child(3) { animation-delay: 0.26s; }
+        #nominalGrid > label:nth-child(4) { animation-delay: 0.29s; }
+        #nominalGrid > label:nth-child(5) { animation-delay: 0.32s; }
+        #nominalGrid > label:nth-child(6) { animation-delay: 0.35s; }
+        #nominalGrid > label:nth-child(7) { animation-delay: 0.38s; }
+        #nominalGrid > label:nth-child(8) { animation-delay: 0.41s; }
+        #nominalGrid > label:nth-child(9) { animation-delay: 0.44s; }
+        #nominalGrid > label:nth-child(10) { animation-delay: 0.47s; }
+        #nominalGrid > label:nth-child(11) { animation-delay: 0.50s; }
+        #nominalGrid > label:nth-child(12) { animation-delay: 0.53s; }
+        #nominalGrid > label:nth-child(n+13) { animation-delay: 0.56s; }
+        #topUpForm .grid:not(#nominalGrid) > label:nth-child(1) { animation-delay: 0.30s; }
+        #topUpForm .grid:not(#nominalGrid) > label:nth-child(2) { animation-delay: 0.34s; }
+        #topUpForm .grid:not(#nominalGrid) > label:nth-child(3) { animation-delay: 0.38s; }
+        #topUpForm .grid:not(#nominalGrid) > label:nth-child(4) { animation-delay: 0.42s; }
+        #topUpForm .grid:not(#nominalGrid) > label:nth-child(5) { animation-delay: 0.46s; }
+        #topUpForm .grid:not(#nominalGrid) > label:nth-child(6) { animation-delay: 0.50s; }
+        #topUpForm label.cursor-pointer:hover > div { transform: translateY(-3px); }
+        #topUpForm input[type="radio"]:checked + div { animation: selectPop 0.3s ease; }
+        #invoiceSection:not(.hidden) { animation: fadeUp 0.45s ease backwards; }
+        #paySubmitBtn { animation: glowPulse 2.5s ease-in-out infinite; }
+        button[onclick="closeTopUpModal()"] i { transition: transform 0.25s ease; }
+        button[onclick="closeTopUpModal()"]:hover i { transform: rotate(90deg); }
+
+        /* Modal redirect */
+        #redirectIconContainer { animation: iconPulse 1.5s ease-in-out infinite; }
+
+        /* Tombol "Kirim Ulasan": biru muda saat ditekan */
+        header + section a[href="#feedback"]:active,
+        header + section a[href="#feedback"]:focus {
+            background-color: #7dd3fc !important;
+            border-color: #38bdf8 !important;
+            color: #0c4a6e !important;
+            -webkit-text-fill-color: #0c4a6e !important;
+            outline: none;
+        }
+
+        /* Mode terang: panel biru muda dibuat tembus pandang agar background animasi tetap terlihat */
+        body.light-mode header { background-color: rgba(214, 239, 255, 0.75) !important; }
+        body.light-mode footer { background-color: rgba(214, 239, 255, 0.8) !important; }
+        body.light-mode .bg-brand-dark\/80,
+        body.light-mode .bg-brand-dark\/85 { background-color: rgba(214, 239, 255, 0.7) !important; }
+        body.light-mode .bg-brand-card { background-color: rgba(197, 231, 255, 0.7) !important; }
+        body.light-mode header + section > div {
+            background-image: linear-gradient(to right, rgba(197, 231, 255, 0.7), rgba(223, 243, 255, 0.55), rgba(197, 231, 255, 0.7)) !important;
+        }
+        /* Jendela pop-up tetap solid agar mudah dibaca */
+        body.light-mode #topUpModal .bg-brand-card,
+        body.light-mode #redirectModal .bg-brand-card { background-color: #c5e7ff !important; }
+
+        /* Mode terang: tombol berwarna & teksnya tetap terlihat, bintang ulasan tetap kuning */
+        body.light-mode a[href="#catalog"],
+        body.light-mode a[href="#catalog"] *,
+        body.light-mode #paySubmitBtn,
+        body.light-mode #paySubmitBtn *,
+        body.light-mode button[onclick="proceedRedirect()"] {
+            color: #0d1117 !important;
+            -webkit-text-fill-color: #0d1117 !important;
+        }
+        body.light-mode a[href="#catalog"] {
+            background-image: linear-gradient(to right, #00f0ff, #2563eb) !important;
+        }
+        body.light-mode #paySubmitBtn {
+            background-image: linear-gradient(to right, #00f0ff, #2563eb, #a855f7) !important;
+        }
+        body.light-mode button[onclick="submitFeedback()"],
+        body.light-mode button[onclick="submitFeedback()"] *,
+        body.light-mode button[onclick="confirmPaymentSuccess()"],
+        body.light-mode button[onclick="confirmPaymentSuccess()"] * {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+        body.light-mode button[onclick="submitFeedback()"] {
+            background-image: linear-gradient(to right, #ec4899, #a855f7) !important;
+        }
+        body.light-mode #customerFeedbackList .fa-star {
+            color: #d18a00 !important;
+            -webkit-text-fill-color: #d18a00 !important;
+        }
+
+        /* Responsif semua tombol: nyaman disentuh di HP, rapi di semua ukuran layar */
+        button, a[href^="#"], select { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        button { cursor: pointer; transition-property: transform, filter, background-color, border-color, color, box-shadow; transition-duration: 0.2s; }
+        button:active { filter: brightness(0.92); }
+        button:active:not(.star-btn):not(#paySubmitBtn) { transform: scale(0.97); }
+        @media (max-width: 640px) {
+            header + section a[href="#catalog"],
+            header + section a[href="#feedback"] { flex: 1 1 100%; justify-content: center; }
+            footer .flex-wrap button { flex: 1 1 calc(50% - 0.75rem); justify-content: center; min-height: 44px; }
+            #themeToggle,
+            button[onclick="closeTopUpModal()"] { width: 44px; height: 44px; }
+            .star-btn { min-width: 44px; min-height: 44px; }
+            #redirectModal button { min-height: 44px; }
+            #gameGrid button, button[onclick="confirmPaymentSuccess()"], button[onclick="submitFeedback()"] { min-height: 44px; }
+        }
+        @media (max-width: 360px) {
+            .star-btn { min-width: 40px; }
+            #redirectModal .flex.gap-3 { flex-direction: column; }
+            #redirectModal .flex.gap-3 button { width: 100%; }
+        }
+
+        /* Latar tombol "Kirim Ulasan" */
+        header + section a[href="#feedback"]:not(:active):not(:focus) {
+            background-image: linear-gradient(to right, #7c3aed, #ec4899);
+        }
+        body.light-mode header + section a[href="#feedback"]:not(:active):not(:focus),
+        body.light-mode header + section a[href="#feedback"]:not(:active):not(:focus) * {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+        body.light-mode header + section a[href="#feedback"]:not(:active):not(:focus) .fa-star {
+            color: #facc15 !important;
+            -webkit-text-fill-color: #facc15 !important;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
+
+    <!-- Background Animasi -->
+    <div class="bg-anim" aria-hidden="true"><span></span><span></span><span></span></div>
+
+    <!-- Canvas Particle Effect -->
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="relative z-10 flex flex-col min-h-screen">
+        <!-- Navigation Header -->
+        <header class="relative z-40 bg-brand-dark/85 backdrop-blur-md border-b border-brand-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-brand-purple via-brand-pink to-brand-cyan p-[2px] shadow-lg shadow-brand-purple/20">
+                        <div class="w-full h-full bg-brand-dark rounded-[14px] flex items-center justify-center">
+                            <img src="data:image/jpeg;base64,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" alt="Irsyad Store" class="w-full h-full object-cover rounded-[14px]">
+                        </div>
+                    </div>
+                    <div>
+                        <span class="font-cyber text-lg sm:text-2xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan via-white to-brand-pink">
+                            IRSYAD<span class="text-brand-cyan">STORE</span>
+                        </span>
+                        <p class="text-[10px] text-gray-400 font-semibold tracking-widest uppercase">Top Up Game 24/7 Instant</p>
+                    </div>
+                </a>
+
+                <!-- Nav Action Buttons -->
+                <div class="flex items-center gap-3">
+                    <button id="themeToggle" type="button" onclick="toggleTheme()" aria-label="Aktifkan mode terang"
+                        class="w-10 h-10 rounded-xl bg-brand-card border border-brand-border text-gray-300 hover:text-white transition-all text-xs font-bold flex items-center justify-center">
+                        <i id="themeIcon" class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Banner -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4 w-full">
+            <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-brand-card via-brand-dark to-brand-card border border-brand-border p-6 sm:p-10 shadow-2xl">
+                <div class="absolute -right-20 -top-20 w-80 h-80 bg-brand-purple/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-brand-cyan/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    <div class="lg:col-span-8 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan text-xs font-bold tracking-wider uppercase">
+                            <i class="fa-solid fa-bolt animate-bounce"></i> PROSES OTOMATIS 5 - 15 MENIT
+                        </div>
+                        <h1 class="font-cyber text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
+                            TOP UP GAME TERCEPAT <br>
+                            <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan via-brand-pink to-brand-purple">
+                                HARGA PALING MURAH
+                            </span>
+                        </h1>
+                        <p class="text-gray-400 text-xs sm:text-sm max-w-xl">
+                            Nikmati kemudahan top up Mobile Legends, Free Fire, PUBG Mobile, Genshin Impact, Honor of Kings, dan game populer lainnya cukup dengan ID Akun.
+                        </p>
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            <a href="#catalog" class="px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-gradient-to-r from-brand-cyan to-blue-600 text-brand-dark font-black text-xs sm:text-sm hover:brightness-110 transition-all shadow-lg shadow-brand-cyan/25 flex items-center gap-2">
+                                <i class="fa-solid fa-gamepad"></i> Pilih Game
+                            </a>
+                            <a href="#feedback" class="px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-brand-card border border-brand-border hover:border-brand-cyan text-white font-bold text-xs sm:text-sm transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-star text-brand-gold"></i> Kirim Ulasan
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Feature Badges -->
+                    <div class="lg:col-span-4 grid grid-cols-2 gap-3">
+                        <div class="p-4 rounded-2xl bg-brand-dark/80 border border-brand-border text-center">
+                            <i class="fa-solid fa-shield-halved text-emerald-400 text-2xl mb-1"></i>
+                            <h4 class="text-white font-bold text-sm">100% Legal</h4>
+                            <p class="text-[11px] text-gray-400">Garansi Resmi</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-brand-dark/80 border border-brand-border text-center">
+                            <i class="fa-solid fa-headset text-brand-cyan text-2xl mb-1"></i>
+                            <h4 class="text-white font-bold text-sm">24/7 CS</h4>
+                            <p class="text-[11px] text-gray-400">Siap Melayani</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-brand-dark/80 border border-brand-border text-center">
+                            <i class="fa-solid fa-bolt text-yellow-400 text-2xl mb-1"></i>
+                            <h4 class="text-white font-bold text-sm">Serba Instan</h4>
+                            <p class="text-[11px] text-gray-400">Cukup ID Akun</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catalog Filter & Game Grid -->
+        <section id="catalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+                <div>
+                    <h2 class="font-cyber text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+                        <i class="fa-solid fa-fire text-brand-pink"></i> POPULER SEKARANG
+                    </h2>
+                    <p class="text-xs text-gray-400 mt-0.5">Pilih game favoritmu dan selesaikan transaksi dengan praktis</p>
+                </div>
+
+                <!-- Search Box -->
+                <div class="relative w-full sm:w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="gameSearch" onkeyup="filterGames()" placeholder="Cari nama game..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-card border border-brand-border text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-cyan transition-colors">
+                </div>
+            </div>
+
+            <!-- Game Grid -->
+            <div id="gameGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+                <!-- Dynamic Content via JS -->
+            </div>
+        </section>
+
+        <!-- Saran & Kritik Section -->
+        <section id="feedback" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+            <div class="bg-brand-card rounded-3xl p-6 sm:p-10 border border-brand-border shadow-2xl relative overflow-hidden">
+                <div class="absolute right-0 bottom-0 w-64 h-64 bg-brand-pink/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="max-w-2xl mx-auto text-center space-y-6">
+                    <div>
+                        <div class="inline-flex p-3 rounded-2xl bg-brand-pink/10 border border-brand-pink/30 text-brand-pink mb-2">
+                            <i class="fa-solid fa-comments text-2xl"></i>
+                        </div>
+                        <h2 class="font-cyber text-2xl sm:text-3xl font-black text-white">Saran & Kritik</h2>
+                        <p class="text-gray-400 text-xs sm:text-sm mt-1">Masukan Anda sangat berharga untuk kemajuan layanan Irsyad Store</p>
+                    </div>
+
+                    <!-- Interactive Dynamic Star Rating System -->
+                    <div class="flex flex-col items-center gap-2">
+                        <p class="text-xs font-bold text-gray-300 uppercase tracking-widest">Berikan Penilaian Anda</p>
+                        <div class="flex items-center gap-2" id="starContainer">
+                            <button onclick="setRating(1)" class="star-btn text-2xl sm:text-3xl text-gray-600 hover:text-brand-gold transition-colors"><i class="fa-solid fa-star"></i></button>
+                            <button onclick="setRating(2)" class="star-btn text-2xl sm:text-3xl text-gray-600 hover:text-brand-gold transition-colors"><i class="fa-solid fa-star"></i></button>
+                            <button onclick="setRating(3)" class="star-btn text-2xl sm:text-3xl text-gray-600 hover:text-brand-gold transition-colors"><i class="fa-solid fa-star"></i></button>
+                            <button onclick="setRating(4)" class="star-btn text-2xl sm:text-3xl text-gray-600 hover:text-brand-gold transition-colors"><i class="fa-solid fa-star"></i></button>
+                            <button onclick="setRating(5)" class="star-btn text-2xl sm:text-3xl text-gray-600 hover:text-brand-gold transition-colors"><i class="fa-solid fa-star"></i></button>
+                        </div>
+                        <span id="ratingLabel" class="text-xs font-semibold text-brand-cyan">Pilih rating bintang</span>
+                    </div>
+
+                    <!-- Form Input Fields -->
+                    <div class="space-y-4 text-left">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 mb-1">Nama / Nickname</label>
+                                <input type="text" id="feedbackName" placeholder="Masukkan nama Anda..." class="w-full px-4 py-3 rounded-xl bg-brand-dark border border-brand-border text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-cyan">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 mb-1">Kategori Masukan</label>
+                                <select id="feedbackCategory" class="w-full px-4 py-3 rounded-xl bg-brand-dark border border-brand-border text-sm text-white focus:outline-none focus:border-brand-cyan">
+                                    <option value="Saran">Saran Pengembangan</option>
+                                    <option value="Kritik">Kritik Layanan</option>
+                                    <option value="Keluhan">Keluhan Transaksi</option>
+                                    <option value="Pertanyaan">Pertanyaan Umum</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">Pesan Saran & Kritik</label>
+                            <textarea id="feedbackMsg" rows="3" placeholder="Tuliskan ulasan atau keluhan Anda secara detail di sini..." class="w-full px-4 py-3 rounded-xl bg-brand-dark border border-brand-border text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-cyan resize-none"></textarea>
+                        </div>
+                        <button onclick="submitFeedback()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-pink to-brand-purple text-white font-bold text-sm hover:brightness-110 transition-all shadow-lg shadow-brand-pink/20 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Kirim
+                        </button>
+                    </div>
+
+                    <!-- Testimoni / Kolom Melihat Saran dan Kritik Customer -->
+                    <div class="pt-6 border-t border-brand-border mt-8 text-left">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-cyber text-lg font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-message text-brand-cyan"></i> Ulasan & Saran Customer
+                            </h3>
+                            <span class="text-xs text-gray-400">Terbaru</span>
+                        </div>
+                        <div id="customerFeedbackList" class="space-y-3 max-h-72 overflow-y-auto pr-1">
+                            <!-- Dynamic Customer Feedbacks Rendered via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-auto border-t border-brand-border bg-brand-dark/95 pt-8 pb-6">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-brand-border/60">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center">
+                            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQDAwMDAgQDAwMEBAQFBgoGBgUFBgwICQcKDgwPDg4MDQ0PERYTDxAVEQ0NExoTFRcYGRkZDxIbHRsYHRYYGRj/2wBDAQQEBAYFBgsGBgsYEA0QGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCAEAAQADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD4PXHAxk0j8HlQKVDhs4qRgGjyBmu45+pCCe1BGDginIMmggmgoT2pw5zSBRjmnqAcqfShCuIE74NP8okA8/lSOoXBB+tWoMSQ7Sen6VSVyGyuq4PBNP28YI5pWUpIynnHenhMqDg8+1UgbItinsKQooXOAKkC4JNIULcsvHYUMLjUGY81E/sMCrQGIzxUXWpYJkAoyTU+3PGKAuKkq5Dt9eKXAAzmpaKY1IhB4oH1qcikx6UNWGmRgbmA3A/QVLgLhfWnRr1NIOZBVJWAXvSIN0jelPK45p0cZJPGM1dgRVcfNjvUZGDzV2RNrH2FUyvGc81jONi0N5AxR3pSKTBqLMob34p4UvgdzSqn8RpxQYyenp3NVYQzy1DEAg471MkOVyfu46ev/wBanQx5+ZzwOiipjWij1BIoAFeD1FGSKMHOaQ9Kkxe45SN1KQN3FMxxSgkDjmhA0OAycdqfGME03GeQKnTheRTRNxrbC23vUkLCNsEcHvTdql8jP5UAL6ke2Ka0ZOmw6Qhpjg9RUySxpEFJOfpUK4yQD+gNPIj2gYbd61SdhPsMOOfmzzS5XPLGjYB1z+VGzngUh3HBUMWMjOOlR7ccVIFA6kihkKnqD9Keo0MIGKQ89adj1NT2+n3t1GXt7SWRB1kxhB9WPH60JX6DuVdtLjFWZ7G9tU3z2sqJ2k25Q/8AAhx+tViSaLW3QJiHrQKUZzTicEDjp6UcvUoQZAwB1oiGJeRUm0FfvCm4YEEMPwIotqVaxIcqueuenvSw5EbZ5OagJcN978qfEjsBtkxk009Rj5CBCxIyx6VQY/NnpVt0fu+RUIjVpSrNjHGaiauwWhEcEcDmm5wKnaBFJwxpnlrjhqzaZadxEbA+YZp2MtuaiJFMmG5Apw+Y4ANVEBwJJBFTFWKHI5Ip0cIVckZNPIBFapBcy6XGRikb5W46dqcpz78VkYDcUZ7Cg+lSLEwQOykA5wfXHWmkGo6IYkU+9WDKCxG35fT+tQKPmH1qQgmQ4Oee1MhkkZgDDe04H+zintIFB8mScem7H9PwpojJPFWIbaSR1SNGd2IVVUZLE8AD3q1foZOS3ImnnkiWKSZ3RSSoY5AJ609I2kuvJgRpWI4CLljx6Dmunh0fT7a8+yfYv7QuIvlnlabESuPvBFBXeFJxktgnnGMVrSLFbW7QSala2UecPb2Y3nGQDlYdqnv9526e9dEMPOeplGvzfCjgJrW4tyPtEEkRboGXFSWtheXu77JbSTbfveWpIH1x0rtfCnhvxZ4n1D7JonhK71xS33LW1XYvpuO0p/3109eufWpvgT4ktLBLrx54j8L+A9NA3eXqN4t3cY/2YhiMH/dAq4Ybm1Mp5lhqMuWtNX7J6/dq/wAD5+h0OZo3eeaOMKOdjeYR9duQPxIpqWZurxdN0m0uNRuM48uCPzGY+wTJI/Gvbp5v2dvCUgxD4l+JOpIPlNwTa2eR6LwcfgaytU+Oniy1gex8I6H4b8CWPKiOytlM2PckEk/8BraOHpr4n+v/AADaGMlV0p0ml3en/B/BGTovwa+IdzZJd3Wi6V4atcZa91d1jYD12sWI+mBUl34f+Emhvu8XfELUvFV0nW00aPEWfTzCSPyYVwmr+Ir3Xrw3Wv61q2uz+tzKQg+mc4/ACqli+qajfR6boOmNJducJBYWzTzt7Dhn/LFaqtQpr3YX9dfwVl+Z0QUlrI9Ct9B+EmuNv8KePdS8LXT/APLpqyEx59N4IH5saq6v8IvG9pEbqHS9L8S2hGRdaVKN7D1wu0n8jXC3/wDaml6m9hr2lyQ3afK9vf27QTD65Ct+dTadr02lyiXSdT1TSJgc5glLJ+mD+YNUq+GqfxKdv8Lt+DuvyN48r+JfcVrzT0srw2t9ZX2mTDrHdgqR+aioZ9MkSETQOtwncx8kfXGa9G0/4ueKnt/smswaR4qtehjvIlMmPyB/8dNW0vfg3rzFtQ0fWfBt9nmewJlhB917f98iqeBoVF+6qf8AgWn46p/ejojh4T+Cf36f8D8TyMAkfLg0hQ969pj+C7+JAbrwL428OeKcDP2WWT7Lcke4zyfriuT8ReBvFHhYpbeIPBuraVbqrNJMIxMJn7fvcFVUen48k8cdTLqtPVrT+ux0vL60Y80lp33X3rT8TgCntUkcmwBW4Gc5AzW0unafOmYrxYz6ToU/8eXcv5gVXu9GntohKygxnpIpDp/30pI/PFczozXQ55Yea6GYZU5GTk9ciq0gBmZgepzVw25AOV5HtUTRYH3eawkmzLltuRmRQOR1qLzMdFFSMo2ngVFtwetQ7giW3R5Gfb1GCfbmrywpGvAyfU0unbF064BHzErj35pzP2FbxilFMV9WhuNopCQBk8D1owT1OB6mqlzPzsSpbsBGYHK7flyOnNM8oqecfnWgDGTkEH8KbcqgtmYAZ45xzScDlU3sUhF3yKeFPQmlgAdgdxPqNpqWQAE4B/WkU2NERVVcnILYqREBY49achLxxozEnIAyenJ/xqc28tvePFMhV0YqynsQeRVKPUyk9NTZ0DQYtSivLm5uZILe0RGfyohI7l32gKCQBz3Jr1/wX8CvH3icR3HhHwJqQR1/d6pqcnlqgI++udqA4PBAbHauF8GQq/hvX89orY/+Rx/jX198aNa177N8L/Cen+IdQ03TdX0i2S4W1kKgk7V3EAjPB6E120qV7Jbs+crVqtbEOhB7tJLbe3+fW55iv7O/gjwZCrfFT4q6PpsiDJ0zSR9ruPp04P8AwE1NbeLPgj4duDZ/DP4Q3/jLU4/u3uvZlQEfxeSoIA+oWvJdU8Y+GdHuZo9I8Lx3s6sR9r12Yz5Pr5SbU/763VoaR4L+PnxXtAujeHdZl0h+A/lLpunqPqdkZH0zWs406WkpXPRWXwjf29Tm8lt97t+COl8XfGf4l3SPa6n4y0fwfaAfLpehIolQf3QsO5l/4E614nq+vWFzePc41DVLk8vd6lMQWPrgEt+b19H+Gf2K7vKTePfHljZL1NjoMJu5foZX2xr+AavZ/DXwE+C3g8RvYeBoNZvI+ft3iKU3rZ9RFxEP++annqT0hH+vn/keTX4gyXKrqMo83933m/W2n32PhDw74e+IHjyZtO8HeHNV1UNw8Wk2jGMD/bdRgD/eatH4h/Bnxz8LvDum6r4zt9Psm1G4e3js4btZ5kZUDkybMqvBHG4n6V+kP2u7a1SwhbyrZfljtbZBFGB6CNAB+lfHP7YnijRtV1Xwn4U0vVbW7vdNlu5b+C3kEhtmk8pUVyOAxCMducjvilUpSiuabuznybi55vjVh8PSahq3J/hotFr5kH7Kfwm8AfEHTfE+u+N9Il1b+yri0htrQ3LxQnzVkZjIEIZvuDjIHXrX2bo+laX4U00af4W0XS9AsyuBFpNqluGHuyjc31JNfMX7FH7vwJ8QVJ5GoaeMf8Anr6fs5S1wsEnzRu2MenuPQ1rSoxacmtj5PjbN8VSzJ4KNRxg0tE7K772K+tWuneIrD7D4m0jTNetcYEOrWqXSgexcEj8CK8b8Vfsu/BbxIrSadpeq+E7tufM0e586DPqYJt3HsrLXXSfFTw3a6zJpWvW+o6PcKf8AWSR+fCw7MHTnafXbXS6fqel61EZdF1Sy1Fcf8uswdh9V+8PxFdlXLnBKVSDSfXp9+zPOp4niDKoKonLk3T+KNvXVfkfIXiX9jDxlal5vBfi3QfEcY+7bXJbTrk+wWTMZP0evHfFXgL4m+AmEfjDwpr2lwxn5ZbqBmtzz2kGYyPxr9IXyGKsCCOoNLHfXtpG0dvdSxxvw0QbKMPdTwfxFc7wD+xI9nA+JVaD5cVST846fg7/mflxDqaZEn2ZI5VH7ue3YowIAwePp2x1NepeFPjN8QfD7pFoXj03sAA/0HXBuB/2cyZH5OK+vPEvwq+FHjFmk8RfD3SDcsOb3SgdOnz6kxYVj/vKa8g8Rfse+Gbtml8EePbzTHPSz8Q2wmj+gngwR+MZqUsRRe115f1+h93lPHmX1GuSq6b7PT8djG/4Wr8NvEMAX4rfBO3tZ5eG1fw6fszH/AGsZCk/8CNSR/CH4JeN23/Dn4txaZdyghdM8Sw+Qx/2RIMA/rXDax+zz8dvBKy3Ol6FPq9kgy114auhfRkerRp84/wCBJXnn9ty2149pr2hx+ehxIuxrOdT7gADP1SiM4Ters/6/rY+/w+Y068VKVmn1/wCCepeKf2Zvil4Zga6fws+sWQBIvNHl+0qV9cL82PqteOalpTWTzI8c8MsLBZIp49rLkkf06ECvoD9n7xXr9v8AG7whpOieIdZt9J1K6TzrGS4yrKGcFCB8pHydcA1x3x52SfHDx3OOd2sP3/23/wAKnEYflWva5riaFOVL2kDxd4/3RcsBzjGearkDb0O79KtTKC+MGoCoVsMOO+K8lrU8HZlu1/492xnaTxmpOg56UlqFMT7M7c8Z64qG5ulx5cfbvVt2Q7DLiYk7V4xVI/fp7ZNMHWsZO42jUG3O4DFR3G027Zz26fWnxsoJVsYPQ0ycbY3APHStm9DitqQwkLyF5HQmlPzPnnP0pbdA5bcx49Kc6kTbVYge9QPqOU4UZXv1qeFish9M9KgDnbtPODU0RG7OAauJlJaHoHg5/wDiTayq9Ghhz/3/AFr6g+ON4ILT4LX5OCul27Z+jRV8reEpvL07VhjrDEfynSvpD48S7/hf8GNQBJH9loufoYTXqUGlKDf9bnzM26eNUl3/APkT5sefVtM8Qxa5oeoS2Gp2knmxSJ8ro3UEZHBwe4717h4N/bP8WWjpp3xP0n+3oEwv9oWeILqMerR/6uT8Nh968b1wSx+QjQ4McCtuJzlT02sCRt9s4B6bDla5PUp9tzbSKPXk/hWNVWnzdT1a2Fo46m6deKkmfo34M+Kfgn4h2D3PhPV11AxJvngSNlntx6ywkblH+0Ny+9dbw0BlVgUGDkehrmPhcEt/gD4GjtkWGOTQLOV0iUIGcpyxA6k9ya6W5cLpszZ7pn867aLcops/Cs5oYSljp4fDQaUW07u+y6afqcb4p8Nar4sSWwvfFupaRozja9hoOLea4X0lumBfB7rGqD1zX59fE3w/pvhH48+KfDOjJImn6Zqk1tbLI5dginjLHkn3r9HJLgckHH1r8+vjgpf9qvx2i/ebXrhR/wB9Vz4+moOLR+h8AYurVdWE2lGKVkkklq+3Xzep9B/sUfN4H+IRJyft+nf+gXFfT1mCdQhH+2P518vfsTHHgf4g88/b9O/9AuK+obRv9Oh/3x/OtsPrTb/rY+Q48d8/XpD8zzXxF4dsfEGlm0uAEmTJhuAuWjb+oPcf1rxfVNBvdF1h7adGhuocMJIieh6MrDnB7V72GBlwT3r5A/agvb7Tv2hknsL24tZP7HsyHglKHo3oa+io5zLL4WkuaL6dv67H1XAeZ11XlgpO9Ozfo7rb1vqeu6X8R/HOkosSa1JfQL0h1BRcr9AW+Yfga7LSvjNbSkR6/wCH5IvWbTpdw/79yf0avjPTvit4v07Ed7LBqKel5Fh/++1wfzzXZaP8ZfD10wTWtNvdPf8A56QYuI/y4YfrXXTzLJsXpNcj9LfitPvPvcdw7luP1rUot99n96t+Z9kad4r8LaztFhr9osjdILzNtJ9MP8p/BjW1JbTx7S8MgDfdbbkN9COD+FfLGk+I/DOu7V0nXLC6dukPmbJPpsbBz+FdnZahrGieF72W0v720W7/ANDhijmZFOcNK+0HHC7VB9X9q2lklOqlLDVU035P8V/kfI4rw3pTkvq03G766r9P1PUPEHjbR/CrlWuGuNTX7tpavh0P+244j+nLe1fM/wC038QdX8WaL4SsdZlie7drnUAoXLRQ7hDEu8/O2SkrZYnPFdEbdLfTJ9Uvrq30/Trc/v767fZDGT2z1Zj2VQWPYV4B8S/FVj4v+JdxqOktM2l28ENjZGZNjGKJAu4r23NvbH+1XBxFhcHgKEaEGpVW9X1S9Ol/v8z7/KeGMNkOHcYNucrJt7vre3Rf1dnq/wCzNbGf9pDwHGMnywZT+AmauX+LMn2r4h+Mbtmzv1uQZP8AvzH+ldt+yYRdftPeGxsYfZ7SUcjHKwPk/TmvNPHdwbrVfENwW/1utMQfX/XH+tfOYl6adl+p9RF2wuv9bnAyuoXbgE5zUGFaTdJ90DgDqafLt3YzUK/fJc/L3rxLngy3HPcYhaGNFAJzuGc4x0+lVRkGrTpB5J2H5s8HNQADBxUSuyhrdMk81H0bmnlSDmmt1qWBcU7jt6Z6Us2WiOc54zShEYEqeP5UyRiUbHXitHscd7sZE7Rg7cU8szOGPJpqAd6kDbWVlyCPShBLRgAN3GefWp4hgimsSXAJdh6scmnqMIWKk+lWtDN7HYeDz573+nq6Ce5gVIEdsea4lRtgJ43EKcA9Tx1Ir6i1LR0+N37M3hjTvBl2lx4j8H2rQX2iyjy7hxgAlAev3Bj16cHg/Jt5HpkWgwm1uY47qNwJYWGZJSyg7s9kGcAY+pJ4HX+B/HWr2nii0v7TV5tL8QwEC01VWO2c44iuPXI4DkH0fI5HfCS0j1PAx2FnJ+2h0/r7tDJvZrqyiltbyKUmFnQK4KvCxOGDA9DnIJ78gjNctrBxLbDAA2g/+OivpH4v6rpfjXwR4A+Jy6Na6freuvd22pPaZCXJgKoHK9MnJ9+xJwK+a9eeR7iCSRssUXn1+VaK7duY78vq+1jzWs/6R+kvwzYf8KE8Agf9C5Zf+i63dTkMeiTtnHzx/wAzXN/Dh9nwJ8BAf9C5Y/8AoutnWpgPDs7f9NI/5mvQw0bwh8j8HzKLnnNfzlL9TCknJyetfCXxrY/8NWeOHzgjXrg5/wCBV9ttPk9c18P/ABrLt+1B46K43f25cYz/AL1Z5vHlUPn+h+icCU/Z1ay8l+Z79+xa23wX4/Get9p//oFxX1DYSA6hAP8Apov86+U/2NpDF4G8eljgfb9PGP8AgE9fTumT51O2IOf3q/zFVhI3oXPj+N03n1/8Bygl/eE5718g/tUHd8eoiRjOi2XX/devsXTtMe7m8yd2htweWAyzc9FH9elZPjv4P/DP4jTrc+I/Ds8V7HEtvHqOn3jw3AjXhQ2dyPjPda2zClKrBQhudfD+cYTKsb7XES0aa0V7Xa/yPgFJLaaBVMsT4AG1uo/A02XRYmUvGgx13Qtux9RX0Z4m/Y3lG+bwP48tZx1Wy16A2z/QTR7kJ+oWvHvE/wAG/i74AQ3eueCtTSyX/l+tEF5akevmRFlH44rw6kZQdqkT9dwGb4LHLmw1VS/P7tzjbBP7M8V6Xclwwju4pBxg/LIpr6Z+KHxS8LeFNUbTopYtc1GzTyY7C1l/cxuTud55V6ZYn5Ey2FGStfLc9z9sUGRArIT80R6fgaigthLNsLqPRSQpb8668HmlbBxlHDuzl17enme9h8RKjrFa9PLp95s+J/GXiXxvqaXOt3rSxwgi3tIV8u3tl9I4xwvuep7k1XtrB7U+fdRqijHzsNwBwDgDozYI47ZBNRNZyQHybhZoQwyFCHL+wHf69K9U8D6RZ6v47eXV9ON9aaTpEt7FbSE+WzxuSFbAwevI7nHWpwdGWJre87tvdjjCpXqpSd297nqn7Pmhn4co/wAcfG0w0jR1tJbfSrSX5rrUXdNu5F4wMAnccDnPAGT4D4okZbaRZ8rcXF2bvyT95YyhwzDtktwDzjnoRnZ8SfEjXvEM0Gq6peC9vo08u0gC/wCi6ZGOioh4aTvzkDgncfu8npzQXF7d3mq3sZYRtIVucs1wx6jdnIbvnk57HmujGyjzOK/pHsVq1P2ao0182YDE7yajboxPpVy/ijgv5YoyxRWIXdjOPfHeqhA2t9K8WSs7Hhy0diNeEIIye3NOCk80gHFPH3RUoFuOEaiHd/tY/SoGUEZxVpVJtieoD/0qMhSpBXH/AAKm4lNC7iGIUAe+KYxAjYbsk9qbHIEG4IfpmhVwuemaW5xpACadnFG1ieh/KlweBg1VhvUlhJaQAnPerb5WHIwPSqkXyycg9O1WCdykDNaw2sZTjqbaWf2y/gtGIVprpI95HTckYyfbmvVviJ4c8G/DfxhafDnStPur3XLS4huNQ166fb5mU3CKGIcKmGBJJLEgV5jExi1CxdkYFp450fHyuuxBkHvypB9K9U/aekjsv2o729mVvLmsbWQlDggGHbuB9RjP4V6PKo6njYxynjadK/utSdvNNWv9702HaxMLj9lv4WQjyyy6lqiYkYBf9YG5J4HSvDdZkee5ikkcszZyT+FdBqviDV4/D1n4RuLgTaPpt7NPaoUG+FpB83I6qdu7HY5rm9SIaSFgwOckEH6Vz12rcp3YPCzw6lGe/NJ/Jttfgfo18PJv+LG+BQT08PWQ/wDIdaetXB/4RmfAyPNj/ma53wFOV+CXgcAf8y/Z/wDour2vTkeFpxux+9i/ma93BUrxh8j8NVB1c5l5zl+bMUS9818WfF1y/wC0v41djy2t3J/8er68S6IPLHFfHvxSZX/aK8XHnDaxcf8AoVTn1JwjB+Z+q8NZfLDzqzl5L8/8j239k7UbLS/h54+vdRu4ra3jvLBmllbCj5Z/84rsPE/xivyDbeEjJZoDn7c6jzGx3RT936nn6V8maL4k8YeB7ma/8La7eaZ5pAlW3kykqjOBJGQVcDJ+8D1rrrL43i8wnjDwdpl8T1vdIP8AZ059yqgxMf8AgAqMpzHC4dcmJi/XdfcVX4coVcxlmFen7S9rK60sktU7J/f8j3zSPjz4lsikeuadY6vGODIF+zTY/wB5BtP4rXf6P8aPAmqgLd3V1o056pfxbo/+/seR+YFfM1p4l+H+tBf7M8Utp0zdLXXYPs5/CZN0Z/HbV6fT7q3hE7Rb7c/duIWEsTfR1JX9a+ro4XAY5c1CX3P9P+AXjeDcozG8nS5Jd43i/u2/A+woZoNQshe6fcwXlsRkTW0iyp+akgfjTre9urCfzrG6mt3/AL0Llc/XHWvjjT9QvdMvhd6Ze3NlOOkttK0bfmpFehaR8YvFtiUTU/susxDAJuU2S4/66Jgn/gQNY1eH61v3bUl2en/A/E+ZreG+IoPnwNVS8no/vWn5Hr3ijwd4B8amR/GPgPQ9UuH630UP2O7+vnQ7ST/vBq8p1n9j7wZr5d/BPjW90GcgkWevxrdQ/QTR7WH4oa7HTvi54T1BlS+W80iQ9fOTzoh/wNBkfitddZ3tlqdv5+l39tfRf37WUSAfXHI/HFeDisldP+JBxffp/kb4bHZ5k75cVFuH95XX/gX/AAT468Wfs4fGXwhFOINGfX9OXINz4euBex47kxr+8X8UFcBYeJda8P3nlRz6hpl9FE1tI0TtG5Qk5SSNuv3iOcV+hRlWziF9Ncm2QH5ZQTuJHZMck/T8SK8V/aj1KPxB8D7bVZ7OM3FtrcEEN1OivctG0ExYNLjOCQp25xwOvWvPlgamHi61N6I/Qcix2JzGk8Q6LhGPW+j9Nn+a8zgvCXxK8Aal4V03Q/il8PrG+syjQQ69oqi2vowp53jgORuHX9a5/wCNHw0074afEmfRNK1OXULObTRfQvPGEkRJEYqrgcFhjqMdegrgtNEdxpujWiSKZDNKGQHkbnUDP5V7l+1Pub9o3ULCKOSaWPSbazjjjXcxY2/AA/4FRVl7S0pbvX8v8z6xTlXoXnqz541lGTW7pG6rIRxVAIS2zI/E4rS1gq2v3jIyupmbBVgQfoe9UCoXh8dc8V4k/iZ4tb43ba5G0TJ128/7QpACVzipT5b/ADFwMDGKhOS+B0qLEF0X0q6UmnhIgiytNvCDezEAct1IAHA6DJ9arFgByOO9NYmmMcjmm2VKTe5CCx6dKt2nkGYfaGZV/wBkA1GI0/hlX6bT/hSlMEbW3fQH+tOOjuc6VtTSvF05GX7BNPIu35jMiqQfbBPFVCflPNVx15GPrTsjdWknd7BJ8zukTRkbhnGanXpiqqKzcjH1NWEGCAadMyaOnlsHt9J025WGeCOZPNAWQSwSMBgurA/K/ZozyD7YFexftXaaJvi/o10xCrd6DZyMxbHHzg8//WP0NeS3CgeHtOYLEC6Alovk34XHzoMqzDp5gw2OHAOM/QH7RSKnj34Z6kxP7/w1bNkdc4bB/NhXscilyx7/APAPKnFTxtCT0+Jfl/kfOOt7yym4t1trh5pHaDOWjBT5Q3cHgnBweeQM1yhJ2qCeB0Fddq9nDaeF7W7RD9ocoS8nzMQynOMcKpJPbnrubtyM3BUV52Ki4VEmexUfNK5+hXge4/4sr4Hwf+Zfs/8A0CrOuz/8UzcZb/lrF/M1i+CpDH8G/BC5/wCZfs//AECrWuyhvC9xz83mxfzNfYZdSvGl8j8Zy3D+0zeLfWb/ADZzhnJ718m/E0lv2hPFJztzq8/T619RedtBPU18t/EgM37QnicYyTq0/A+tTxVT5IU/U/ZKGG9lTk/NfqI1rpFwubPU5YHx/qr9MDPtImR+ais3UfDdxHEbiS2MaHkXEJEkR/4EpI/lRkjrU1neXmnXf2rT7ua0m/vwtjP1HQj618i+V/Ev6/r0ITaOXmt5bdtrjKnow6H6Va0rWdW0S487R9Tu7CQ9TbylA31A4P4iu+TW9E1eFoPE/hS2vJGIIvNIdbG5B9THgxSf98qT61k3Ph3w1qE5XRdW2S/8+16v2SYe2GJjY/Rh9KI0JJ81KWv3P+vQ6oKT+HUs2HxV1NAI9d0iw1Re80Y+yz/Xcnyn8VrrdK8ceDdTCodTm0mY/wDLPUo/kz7SpkfmBXlOpeHtQ0yZo7hSpXkrKPLYfgf6daysd69fDcSZhhHyylzLtLX8d/xOiGIlHSSv6/1c+k7bTLu/8ltOjF+sp2xvZOJ1c+xQmu/8P/D25067W+1maW3uF5WC2lKOp/2nU5H0B/GuI/ZP8H+I9J8W6j42v9JmtNGuNJltrS4nHl/aJWkjIManllwrfPjHbPNe+XSySTuZFIYknmvq6HEVfG0bcnJ+N/Q+Sz7iZubwuFaTW7vd+nl+ZD4j3yeJ5gzMwVIlUMSdo8pTj88n8a8q/aJYRfs62yD+PxDAD74tpq9f1uD/AIqGZvVY/wD0UlePftLK0fwF00dn19D+VtJXl5lP/YLLsv0P1uhg+TI4Vf7kfyR4H4D06G68W+GlUMWudUjhIJz8oliA/wDQjXsf7RKS6p+1r4mtLeO+m3BIHhsiFaRRDHuVnPEaf3nPAA6V538G7I3vxU8A2uP9ZrEZx/23T/4mun+Nlz9t/ag8ZM0IuN9/LEI3Zgh27R84XG9RtyVJAOBkgA187TWkb+X42POwiSoJv+tjxGdUXUHAVAokYBUfeoGT0buPfv1qGQbnAFSXLEahIxKn5zyoGDz2xxj6cVESS4Cjk15Et2eBP4mRldsmM5pM4c/WpTs3EOdpFRFCXwvOenvUMkODSYPcVIseAxkU8DjBFOMsQX7gJ+mKaXcGUgWByrfkcU/zH7u4P1NOjtyyZ3gVILTI5k/Skk+hycyQwvuYsepp6EhwcA47EZprxNEcE5HY0JneBmrT7lJk0YyKnXHFQKeOat2scEkjCe48hQjMrbC+5gMheOmTxnt1ramrkt21Zt2d1JcabFbyKh8iQBHAw20huDj73TgnkdM44r6P/aKPmaN8GtT/AIZfD0CEj2Mf/wAVXzPp8oWBz6PH/M19b+N/DOo/FX9mX4d+IvASW2vXXhfTxa6np1rKGuYWGzjy+px5Z4HJBBANepCSXI3/AFueZirU6sJ7JNnx3e3s8xijlnM6xDakeNqJ24A6n1Pf3rb0P4WfEbxTL5uieCdZuI2PEz25giH/AAOTav61l3+lTmeWS2jdtjHzImGJIyDyCO+D6dO4Fel+Bf2g/Eeg20Oh+MLnUNY0pAEhvIpv9Ns1HTYzcTIP7j/gy1xwpx9p+/dl33Kx88VGmng0m/O/4Jb/AHr57H07pmjan4f+HvhXSdUt/JurLRrW1nVXDqsiJhl3DIOD6VT1x/8Aim7jHXzIv5msKw8c6pqOg/23oet6f4i0UkK9ysGDET/BOnDRP7NwexNVrvxU15YyW02nxxB2Vi0Tk4wc8A/X1r9Fy3ATcITptSirapny2R8P4uGMp4mpyuKlduL21u7p2a9NyrknPavmL4lE/wDDQPifnn+1pufxr6kSHzLQXMfzxHjzByAfQ+h9jXy38UnVP2gfFTk7VGrTHPpzXl8Yv93S9Wfq2MoKFC/dr8mQpcQXKBbohXHSQ9/qev55/CoJ7aW3kAdG2tyjHGGHqCMg/gaqh+hyCKs/aI7WyYzzYjkwREpyWIOc47fWviL33PBUe4tvbXF3N5VugY9SWO1VHqxPQVZl1rStDI8tY9a1FOFe4TdbwH/ZQ/fI9W4/2e9You9R1e5j0rSrOeSa4fy4rW1Uu8rHoAF5Y/SvdvAP7MrDydU+Jty9sOGGg2Ug88+08oyIvdVy3utbUYTqS5aKuzDG5thsth7SvKz6Ldv0X69O6PIPD3hfx38VfFDwaPZ3Op3AIae4dtkFsv8Aekkb5UH1OeMAHpX1B8PP2fPCHg4w6n4gMPibWkwwM0f+hW7f7Ebcykf3n49FHWvR9OttP0bR4dG0WwtNN02HmKys49kan+8R1ZvVmJJ9as3t/pui6cuo69fx6faOCYy43ST47RRjl/rwo7kV7WHylRalU96T6f1ufnuNz7Ms6q/VsFFpS6L4n6vou/Tu2aTSTTyjJaRzhQByT6AD+lcx4k8c6H4cD2rbNU1EcGyhk+SM/wDTWQZC/wC6uW/3a4HxT8TtR1hJNO8PxyaTprZV2D5ubhf9tx91f9hMD1LVzGlaRdahcCCyt2lk2liFwAijqzE8Ko7k4Ar6/B5HZe0xTsu1/wA30+X3n2nDHhlHnjVzGV/7q2+b6/L72dtZ/EjUbvUZLjWrKCVZG/5dV8sxgDAABJyAABzz71yn7Rup2uqfAfQrm0MnlS64dvmIVJK27ZxnrjPUZFYOu/Ezwb4KjeDSYrfxbry8Btx/sy2b3Iw1yw9F2p7t0rx/Wtc8V/EHXW1jxDqsl26/IrzHZDAvaOKNRtRR2RB/jXzvEOaYGrF4XBRu+rXw6du/rovU/WcwzWlDCPLqHvKyWmyS6Luen/s52X2r4+fDuLri7MxB9nkb/wBlrH+LGoyL8afGGoQ7DI+p3KqzruxmYjIHQnjjIOOvXBr1H9mvwbq+m+PdI+JWs26aV4Q0KCRpNW1FxAkpKyAbM/e5ftxx1J4rwjxhqkereJ9Zv433pcXjyq3qGkdgf1r52o+SNr9F+R5NS9LDWej/AOHOQdQ75Zuf1NMiBSTcTjHenTMA55/KoWP7sDP1ryz51vUWQ7psjDZqwLdgivvKFhnG2qijDj61qSOjRRFTn92oP1xQkmhrYoyGUPsEmfwAphhGzcZ4+e3P+FPmyJSwHTFMEkgTaHIFCt1AVNiZ+U4+tSoQRuB4NVGkIOAKQO+3AOB6Cp5rHDy9ye6z5o57VCv3hSMzNjLE0+NS0gABJ9AM1S12NVsKhx1OKmVsEHJxUSkgcOwH+7TieM7yfwq4uwF63u/IJIRZEbAZHHDf1H1Fdf4R8X6/4R1+LxB4G1u707UIusSt85A6qR92ZPYjPt3rhA2EIqe1kt9+LhpkU/dlQZKn1x3H4g1006zWj2JdJVFys+n/APhNvhb8fFjtfHkNt4G8cvhYfEdiu20vH7CdSflJ9Sfo46V5J8TPhX4i8B6wbLxPYiGOU/6PrFqpktbodjkDgn8G9j1rmLH+zBeE+ITcyWc6eXHqNhhzG+fvFTjfxwUba2K73w58Wte8D2MnhLV57Txn4KuMKbO4JaPYf+eLON0TD+4wwPTvXZypx97b8vkePUwmKwc+fDPmj1i//bX+j080eY6Nr3iXwL4iXU/D+qS2N1s2mSBg0c0Z/hdTlZEP91gR7Zr2Xw58V/DXimJLXVo4PDmtHA6kWNy3qrHmBj/dbKejDpVa/wDh/wCHPGWmT6x8J71L+zUb7jw3et5d3annPlsT7nGSQezdq8e1Xw/JbNO0KyAwkie1nQpPb/dGGQ84ywGRXRhMTi8qn7XDy919Oj/r70etg8RBy9pFa9b6P0f9eh9S2N1qGk3rNE0lvLjDKRkOvoQeGU/iK80+L/gTSdS0fWfiLYzS2WpRyJPqFofnhuTJIqGSI9YzlgSpyPQjpXBeC/ijrPhYRabqCHVtGQ4+ySvteEd/Jk5Kf7pyvt3r1nxDrnh/xX8C/FV14e1NLuL7AryW8gEdxblZomAkjz7H5lyp9e1fR4zNMBnODnzrlqxTaT7rs+p71NKtFxpyvHV8r3Ts9V/mvmj5ytrloRgnKeh7V6j4C+CXi/x/DDq1+V0Dw83K6leRndOO4gi4aU+/C/7VZPwMsbLUP2hvC1nqNnb3ls92zPb3EYkjfbE7Dcp4PKg8+lfZEWvWmqur30xtrsgDdIxaJvYN1Qex4HqK+WyvKnjFKb+GO6R8FxBmONwydPBU7uybe9r3Wkeu3nbsY3g3wR4V+HtgbbwjpjQ3Lpsn1W6IkvZ/UFxxGp/uJgepNb7yJBbyXFxJHBBEN0k0rBEjHux4H9a5vxF480Hw8Xto5U1O/Xj7PbSAxof9uUZH4Lk/SvKNf8U614mukfU7geTGcxWsI2Qxf7q+v+0ck+tfbYDKW4pQXLE+ZyrhbG5rP6xim4xfV/E/Rf56djvNc+KKQXRt/DESSleDfXMeVz6xxn+bf98iuBvr/UdY1STUNUvZ726lPzzTuXY+gz6egHA7VUjhijsn1G/urewsIjiS8um2RqfQd2b/AGVBPtXFa78WRYs9p4HikhYZDazdIPPP/XGPkRD/AGjl/wDdr0MVmOByaOus+28n/kvwP17KspwmU0EoLli/nKX+f4I7vVdS0PwfbifxVdSRTMu+LS7bDXcw7EqeIl/2n/BTXlnir4meIfFlu2k2aDSdFY5Gl2RYiXHQzP8Aemb68DsormrfTrzUnfU9QumjhkffLd3LFmkJIyRnlzz1/WvWfBXwsnudGk17WrqHwn4YVdtzq+qcTyhh92JOoYgnCgFj2GOa+HxuZY7OZNS92n26fPv/AFY65Y2tir0qC5Y9f+C/02OK8IeCdT8S69a6To2mza5qtzgx2NqCUQesjjsO4BAHdu1e/P4S+F3wQt0vPiXc2/i3xrGoaLwvYuPslkeoE7AY4/u4/wCAnrXO3PxjsfDukt4F+Bmmjw9aTqUuvEN0VTULxQPmYyEkQR4yeCWx3HSvJ9Wl0iQra6RLcazqQYy3mpz/ACW6n/pmrckZ6ySEbuyjv5rpKlG8Nu/d/wBf8GxrT5MPFuGr/rb+vuOo+Inxe8X/ABHuY5tev1tdLiP+iadar5dvCBwBHHn5jjjc35jpXmV1dh8pEpRc5OTlmPqT/hxUl1LAM/v3upm+/KchR7Lnk/Xj2FZ7ng151Wo5Ox5+KxMqjs2NJpvajvig8CsLnCOQcc9atxZ8hPpUEC7gRjJyKTB8oHcc49TTQN2JJckOAPSodj9NjflSgja2xm9yTTj5mTmU8HH8/wDCnuNMrAhxkHNKAoJJB6etNjhc/wAJz/vU9wVypUg49azscrHFSo5DKc4INCHawIkII7jtUmoBvtsobKndyD24qvkbsc1o1Z2KStoTRpuUtuJA7VZgWxeVVl8xcnGQ4/wqmkhUFQeD7U5WCSAHBGfSmmS1csSRRquVmDdcj0/xqEH1pn8Rx0pyo0nC4JHvTUmNeZZt7y5tWfyHwrjDowBVx6Mp4NaNl5V5OUjtmWFdsssIJkGAdrFe+ArFsHJGKxQGV1B4JP8AWrFu7xXHmKxVl5DKcEH1yOldFOfcq+ljUtF1Sw1Aav4buZop4MSo1m5Esa7QS4xyVzkHGehzXfwePPCvxDtI9P8AiXbix1QJ5cHiOxUKcdhMo6j8x7L1rzuLWWMwExKMr71niyCG/vHGCG/2lwfXdV27uYrqPfeWsEkso4njwvnHPVlUYZuvzJtbP3ga76Ff2f8AD+F7p6p/5f1qaQhTfvdS/wCMfhzrfhuH7dOkepaTJgw6zY/PGwPQvjp+P4Ma4eSCe0O5HJRgV8yMnBB6g/4Gu+8LeLdf8JvJFoF0L7T3J+06Ld4cMO+AOD7lefVTXQHwz4O+ISNdeALpNF1xl3T6FeNiKX18s9MfTI9lrSeBpYn3sNpL+V/+2vr6b+p0KiqmtPft/l3/ADOR+EOuab4a+OXh3WtZultbG3ncyzPnam6J0BPoMsOe3WvZ/EWsaxNL9keI2ds6BlWNwwmQ9GEi8Mp9VOK+eNb0C/0jWH0zUbKawvkIDW8wwCD0Kt0x75x71peGfHWueEwdLljF7pe7c+mXedik9WjPWNvdeD3BrryLN1ldSVOvD3W9X1Xy/pmNChSjWc6is2kr9rX6fP8A4B6faQSz3Qgt4mdz0RBn/IrJ1vxx4e8OK8Ft5et6oOPKjf8A0WE/7bjmQ/7Kcerdq4bxF471TXFk07TYjpmmSHb9lgYs83p5r8Fz7cL7Vj2ejyPeRW8kM1xcyHbHY2w3SMfQ4zt+nJ+lepmnFc6t6OAVl/M9/kv6fkei8TCnpSV5d3t8l/n9xLq2u6/4v1JZtUvGuDEMRpxHDbr6KowqD+fvWt4T8G6t4l1H7JoenfbJAcPezArbwe/+0fTqf9nvXXW3gPRvDemxat8Sr5LGM/Pb6DZNmWX/AH8HP1Ofqw6VT8Q/EDWdX0ldP01I/DHh1VKQ2lr8sk69McYLe+ML6k14P1KNK9XGyfM9eX7T9b/CvN69kQ6WvtMVJ37dX69vmbE+o+DfhxMiQvH4t8S26iMTS/8AHpZEDGFA4yMdufcVx+t694v8b3D6xq13LcQxkpGWPlwQ5P3Il+6PcDnux71jwzaRHEg/sp7i4GSqtM2xvTeoAz6/KQD0PqVvLi8uoWnubti0W2NVQYjizyI1UfKoABOBXPiMfOsuWKUYLov1b1b82VPEJx5do9l+r6v7/kaDvplnpctleOWPmtIFgxvkHygAk/cXCk5OSS5wvANZF3qElxGsaRxwW45W3iztB9Tnlm9ySfpVPIAODn3NOSLcu4sAo/WvNlNyOKpiXPyQ91AgR8nJqDqat+TJ5buoPloQOvTOcfyNOdhHCecn1NKUerMb6j9JOlpeb9Wt7iaAfwwyCNvzINTX40lpnax0m+jj/h825DEf+ODNZhdsfeNRtjb1yalSsrWN1Vajy2X3E1uWjOXRhyD0604FgoBjyuMABqphhvxyKuiREQYk5xyKlMxmRSthmbGAewpPOBY4U855/P8AxqRnjJUsAy96rXBjD/ugAuOgOaV7DiTrwOOKWdf3WSQ3GeO1JuBHTmtKxskutM1KV22+RbeaPc70X/2an0MacXN2RkyOZYxJM24tySeppmFCkgc0Of3agEkAdKYAT0pXCwqkk07g9DTenympPkCDGCc80wGjJqaJimWBX05piKrORuCDBPJ746UZxHjrz1prTUCfggMOo+bimwFf3hcA5U4z61EGccA8EVPBErrtJII53D+VXFu+hUSLBBwRzUyTyRwtHG7KrHLYJGfrURwJSDnrzSkqB0pp2HYMlSGViCOQQelWo71TMk00kkVyrBkvITh1I6E46n3GD9aqZH1ppA6VSm1sM9V034hWOsaXDofxR00axYY2W+s24/0iD3yOT79D6hqqeKPhjdWuif294duY/E/hsgtHdWpzPbj/AGgPTvgY9QK85t7qezlYxFSrcPG43I49CO9dT4S8T6toGrfbPCmpNY3L8y6dM26G49hng/Q4b0Jr1YY2GIXJilf+99r/AO2Xrr2Z1Qrxqe7X+/r/AME0fCfw41bWdNbVW2aBoiLmbWL/AOVnXvszjj6YHuela0njLw/4StZdJ+GOnLLc7dtz4hvlBYj1TPAH1wPQHrXPeMfGWv8Aii/DeKtQPlxnMWlWp2Rxem4c4Puct9K5We5MyKh2rEOVhjGFU+vufc81TxlPDe7hVZ/zPf5dI/n5mjrwpaUN+73+Xb8y1eahLd30t7c3EmpX0hzJd3JLKD7A9fx49BUAutzl5zBNKess0Rkb+dQSTF1ACImP7gxURbnIryZ1pN3ucnO3qzRadWjNxd3VxcK7bdqrs3Y7FuoHsBVW7vp7th5j4Rc7Y14Vfw9fc5J9arnnmjHpWTm3uxSm2rIVD97I7VYIK2/KkDHU1WAPPB6U4FiGBzjFCZnZkszDr7VEW45IxQxZkzjgcZqPGfvVMnctDmZenH50xnC9xSlVxmmbVBySahjEJywNJJtzwOacxXcMDnNMbGSeOalhuPQ5TbxjOfrSlSfX86aoJGB1pec4BwTTKJQ+B0qVL2WG3mRCQsibXX1GQcfmBVUyUkn+qaq5uxhFtO6CPEhLSSBc55NB2oGI5wM8UyMhkC459ac23Y4yfun+VJCPavib8AZ/hve+CreXxRb6l/wk8gjVo7Novs2TEMkFzu/13bH3fevUL/8AYq0/SbsW+o/GfRLSUjcqXFkImIzjIDTg4yOtWv2lLvzta+DJY52Tp/6Fa11Xx/8AgpdfFv4k6frVt4t0bSjBZCzFtexl5JD5rtuXB6fPj6g16f1TVpK9rH039kxUqihT5nHl0vbdXPF/iP8Asra54L+Hlz420DxdpPivSrMb7s2aGN4kzguuGZXC55AIIHODVf4X/sxa34/+HyeNda8V6V4U0Sdj9lmvULvMA23fjcqqpYEAlsnHTGM+rTaPpX7Pv7KHi/wdrnimy1LVNeSdra2gQxkmSNYhtQknaNu5mOB261zXhDx78IPiF+zDovwp+JPiS58Nz6O67JR8qzbGfY6sUZSNshBVsEEZFS8OoySlo/UxlgKMKyhNJS5b8rfXtcZJ+x/pj2sp0z42+Gby6VGZIRAvz4GcfLMT+hrgPAPwFuPiR8HdX8W+E/Fdvc63pYZZ/DrWpWUsPmULJvwd6glTt5IK8Hmu6s/2d/gp4u86w+Hfxf8AtmsLEZY4n8mUYHdlVVbbkjJHTNeWfDPxzrnwK+Ocs12H8m3nfTdZtI23CWJXwxX1ZSN6n2x3NTKlytOS0Mq2FhSlB1YWg9Lp3/qxzPw/8Ca18RviNp/g/RV23N2582aRTttol5klf2UdupOB1NavxW+Htl8NviI3g6x8UR+JL6BF+1Nb2hhWGVvuwjLNufBBPoWA65x9Z+Nda8B/A/wv4j+KXg62hk13xgyGwxzGXdN+9Bj5Y8kzMO7ED0x8+/s4eErn4g/tCRa9rTyXltpLnV72ec7vOnLZjDE9S0hLn2Q1UqHLJU92x1ctVKccMtakn9y/rU0/iF+yt4k8AfBp/HM3iC21Ce2jhlvtMitWRrZXwHO/cQ2xmAPA4ye1eRfD/wAJP47+J2ieDlv0099UuhbC6eMyCLIJyVBGenTIr7b8NeK/GXij46eO/DnjDwrrUXgvVrVrOxkurV1hVYgY2OSMDzVd2+oWvmT4e+GbzwJ+2noHhq+yZdO1wRrIf+Wke1ij/wDAlKn8aKmHtZpaN2LxWXxjOnKCai3y697/AKnpF3+xvp1hdtbX3xr8PW064JhuLURuARkEq0wIrifij+zH4j+H/gdvGeleI9M8UaHFj7RPZKUeFSdofG5gyZIBIbjPIxzWV+1G6XH7UGvS7VbMNoMsAf8Al3SvRvhJeMv/AAT/APiTaOxKb7sIp6LmCInA7c80KmpScLaq/wCA/q1GpWqYeMLON9bvofLWMfWvd/hj+zDrfj34fxeNta8W6V4V0W5J+yyXiGR5gGK7yCyqikggZOTjOMYrwg/fJ96+pfC3jn4QfEX9mbQfhh8RvEtz4budEZNsgG1ZSm8I6sUZSCrkFWwQelY0YxnKzOHL6VOrNxqPppd2u/USb9j/AEuS2kGl/G3w1eXQQskAhX5yBnHyzE/oa5P4cfs5ab4++G9j4rufipoWhSXTSqbC6jVpI9kjJk5lXrtz06Guntf2ePg34sE9n8Ovi4t9rCRGaOGUQyrgd2CKrBckZIzjPSvmrWtMuNH1y/0nUYI0vLOaS3mXAbDoSpwe/I61pUp+zSco6M6sTQWH5ZzpLld9pXX3n1JefsWW2npG2ofGPRbQSgmM3Fl5Qf8A3d0wz1HT1rzzTP2bPEHiH46av8P/AA34k0zULHSIoZrvxBtIt0WRAyhVVmLPkkBQf4SSRiu4/bAuI7rQ/h3lVJWzn4YZwNkFS/slXZtPht8TQh2f6NGRt4x+4n5qpUI+19lb+rXOieCovGfVVC3XfyvYcv7HmiCTyj8cfD/mk7dotkzn0x5/rXl3jj4B+JfAPxZ0TwbrF/bTWutXEcVlq1ujGNw0ixsSh5DKWBK57jB5rydVV0DNGhPl8naP7tfavxwvhLqvwSldtxS+gyScnP8AotRTpxqRbS2MaNGjiac5Rhblt1vu7HL3v7GNnp10bbUPjLodpJjd5c9oI2I5wcNMDjrXEfEz9l7XfA3gOXxponirS/FOjW+PtUlmhjeFc7d4G5ldQSAcHIznGM49l+O3wOuvir8U4NdtfF2jaYy2MdoLS7iLyuVdzuGD0O7GPY1i6xY6J8BP2SfEvw/1nxVZ6lrWumV7a1t02NmQImVQkkIAhYucDPA5raphOW/NGyXW5318rjT5+anyxSfvX/Q4jwP+yqni/wCEei+Or34ladocGpxGQQ3dnxEd7Lt3mVQSduelXL/9knR7TTri6X43eGZTDE0gjEK5bapOB+/6nFdzYWHgrxH+wj4O0rx/4ik0LSAUl+2R4z5glm2ryrDnLdu1eI+PPAnwC0fwDf6j4N+Jk+s63EE+zWL7MSkuobpEDwpY9e1Zzw8YxTstr72/Azq4CnSpqfKn7qesrPbseLDBUNjHAOPSmEEn/CppJy+1SFAUYAAxQg5LtjnoBXm2PnE9dRgQqSOO3U4oIIbPy8e+aWViG4HWkZSIiWK9ujg9aZZGMkD60+T/AFB/z3pi53DBp0jDZt7mhHORg4QAdadztPqQR1qOncjmkB9AfFn4peE/GGpfD6fRry5lTRJVe88y2aPYA0J+XP3uI26envWN8fPiFoHj34l6Xr3hS9uXjtLIRec8LQOkgldwVzzxkEH1rxtHO7k1MGyPWu6eNnUUk+tvwPVxGb1q8ZqSXv2bt/dVlbU998afFHwX8UvgbZQeK7mWy8c6YpENwlqzpckYyCyjCrIACQfuuM9KyPAlx+z7L4DtLfx7aarDrsTSefPaicLIpclPuEjhcDoK8ZH3x356UodlzjuME1X1yTlzyim7W1X9akvNakqvtakIydraq9/N+fmfTnh/x1+zl8NdUk8S+ELTXr7V1geKGOQSnhuoBkIVc4AJ5OK+dfEms3PiTxZqniC6RUn1G6lunRDwpdicD2GcVs+B/A7+ONQmsbbxBpGm3UcbyrFftKplRI2kdlKRsPlVGJzj2zU2heATrmt6xb23iLRhp2kwfabnVZZJVt/LLpGpX935hy8iqBsz1JwOa1n7avGKUUl5HNjc4+sJUnFRjHW0VZa9fM7r4s/Ejwx4v+Dngnw5ot1cyXukRxrdJLAyKpFusZwx4b5gelaPgP4reGPhj+z1qNl4bvJX8b6jJ5sjNaHy4WztX5mG1giZOO7Ma4GT4W6u3j/w/wCF7LUdLuTr8Uc1hfQyubeRHZ1DEsgdcNG4IK544B4qh4o8A3fhzwxZ+IItZ0vVtMu7mSzW5sGkws0aI7IwkRD92RTkAjnrmtZPERlKry7K3obRz2br+3jbncbLR6aWuuz0/M66H9pj4ux3KSP4gt5kRwzRNYwgOAeVJC5GemRXY+Lvih8Ntb+O3gn4j6bfXkclnIq6rE9m4Koqkow/vlSzKcdRivCtD8MX+vaRrmo2TwrFo9mL65EjEEoZY4gFGOTulXjjjNbWm/DbXNQ8U+FdBjuLJLjxLBHcWbPIQiK7yIPMOMg5iYnAPGKinWxEo91pv5FRz2vGLhVnzap+9d2a101+/wAj2jxZ4o/Zp8a+LLjxF4guPEE1/cBFkeGO4jUhFCrhRwOAKw/GPxa+Huj/AAbvfhv8KtKvY7XUCftV3dqy8MRvI3Es7sFC5OABXmnij4fXXhzwtaeI4Nc0rWNMubqSxFxp7S4SZEWQowkjQ/ddTkAj8a57RdA1vxHfPZaDpV5qVykTzNFaxNIwRRlmIHYDqaqviK0ZODglJ9lqdFTiCdSM5xhCLle7UbPXfVmcSc5r2PwNcfs/TeArK38dWmqw69E0n2ie1E4WUFyU+4SDhcDoOleOhTkq3GOtd5rfwvvfD2kXNxqHiDSft1rDHLPpsCXMssZdFdUZxD5Qba4PL4681zYdTTcoxT9UefhsbHCVOZxUr6Wkrrp/Vz2Dw948/Z3+G9/N4j8IWmuXurCBoYo5BKchsZAMhCrnABPJxXzjr2rT+IPE+p63dKqz39zLcuq9FZ2LED2GcV2fhv4U6j4j0rR7s+IdD06bW53ttLtL6WUSXbo4jONkbKoLnaCxHPtzWXo3w68Q6/4b8Q63pscMkeg7DeQb/wB6QxfLIv8AGFEbFscgAnkA10V4V60YrkSXRIvGZ0sTFU2oxjF7JWV27fnodx8ePiP4Y8fad4Uh8O3VxO2mwSR3AmgaLaWWMDGev3D0qn8DPinp/wAOtU1ew16yludE1eJUuTANzxMoYA7cjcpV2BAOehFYF98J/FOmeNvDfhTUPslvqevxwyQRPL/qPMkZAs2B8jAqdy8kdDzkVV0L4ceIfEfhXxBrukJBPDoZT7TAJMTOGDktGmPnCrG7NjkKCcEA4hvEOt7Xl97/AIBbzxyxKxqkubT0/l/HY9WB/ZPWTeP7ex18v/ScY/u/Tt1rF+JHxk0rxj8SfCb6Za3Fn4e8P3cUiNKn7yQCRCzbATgBYwAuSf5VxUHwy1uXxzL4YlvNPt5oLD+07i6mlYQQ2/2dbguxCljhGHAUnPAzWP4q8Lt4ZureI6taaks8fmCW1inRV5xj99GhPrkAjHeqq1a6pv3FFdbI6qmfOpH2VOEY3s3yq17aq7Oz+OXxA0fxp8X7LxR4TvrkpbWcMcdy0TQSRypI7ArnnjcpBrofiH8SvA3xS+D2m3GuzS2PjvTkwrR2jNHcc4ZC44Cvw4z91vYmvCDjrTSc+orkljJuU20ve3Iea1ZSquSTVTddPVeaPpXw/wDEj4Paj+zt4f8Ah/46vdUJskVpoba3lXEiu5X51HIw9Yt1/wAMqfZZRBJ4i87Y2zP2nG7HH64rwPk+9MYkHFU8wk0lKEXZW1R0vOpSjGM6UJWSV3G7svmISc5PXvT1OTUec0qkBsmuBM8R7iucy03OKeSrZIpjd+KGyxokI4wKQnnOc000nei5gSdaSgHt3pwBOAOSaBAASDj0p6OV7kUgyAwx2/rSflVIdiyp+XcCMCmlstwKRmJxhcADAApPwxWlwcbG34X8S3nhTX/7XsIoZZhbz2+yYErtlheJjwRyFcke+Kt+EPGM3hVtSibSrLVLLUrUWl1aXnmBZEEiSKQ0bKykNGpyD6g9a5kN19qbvPTFVCvUhblexnKjGd7rf9Nj0Q/FbVIfiB4c8VabpWnWJ8PRxw6dYxCQwxojO4BLOXY7pHJJbuOwrnPEfjXxV4uMH/CSeINR1QQZEIvLhpBHnrtBOBnAz9BWBkjvS72UcYP1q54qpPSTFGjCLTSOn8G+MJ/Ccupx/wBmWOqWWp2n2K8s7zeElj8xJB80bKykPGpyD2x0NbX/AAtbVYPiP4e8W6dpGm2LeH44odPsYRIYY0jZmUEs5dvmkYkls8+1efrMRyCR9KcWB7CnDFVIw5IvQcqEG7tam/4l8ceLfF5gPibxDqWqi33eSLy4aQR567QTgZwM+uBVfw34q8Q+EtSk1Dw3q93pl1JE0DzWshRmjb7yk+hwPyrKG0j7uPxpV2A/MufocVDqTcua+pXIrWtoN3kyknv1r1G++N2s3mg6xZjRNMt7rWbFbDUL2GW5BuECJHuMJl8kPtjUbgnHOMZrzAqoYMvBBznNBGeT+JqqdepTvyvcU6UKlnJXsejeHPjf438K6T4d0vRL4W1nolxJcJApIW6Z5fNImGeRn5eMcfnWPoXxF8R+GYbv+xJ1sri4v4NSF1H/AKyKWLzNu3ttPnNkEHIwPXPHbSkhU9QcYpSW9KtYuqtmSsPS1vFa7+et/wAztf8AhZWuHxN4Z16VLea88PgeQ8gZvPInefdKc5Yl5GyRjjH1qtoXxD17w3YXFvo0y20s2oQamtymfMjlhEgXbzjaRK2QQc9Omc8kAxPSmOrE5AIpfXK1+bm1L9jTtbl/q9/zPRp/i5q118UNQ8a3GjaQ8moWbWFzpyRulq0DQCBkUKwZBtUYwwwenHFZnjj4iaj43tNJs7mzgs7PSopIrWCKaabaHYM2Xmd2PQADOABgAVxJVlOGOPwzQsZZSVfOKiWLqyi4N6AqNNNNLbREhPGKQxPnGw571EGCgFWJb19KnVD0yK5zRsZhkOGBFRsGL5ANWTGCFJc8/T0NAgXaTk9PQUOIJlQg5weDUrBQmAo/HH+NOMIHO4/p6A1C42yFc9DjpUvQpBuwWwAAe3pSdc0lL681JQw0nOaWgc55xVGbHxI7bmUZCjJJ7UZyae8sn2YRqu2LPb+I1Dv7YxT2IJ3cbQq8L1PqT71Fu56UgYY7n60uM9qLleg4uSMDNOywHzA570KojXdjLHp7Ug3EHJODyfemmwTbEJ5peMgimtkUZqblEoYH2+tI3PHWo8880oJB9qdyWuoq4PGadux2phxnNISc02xblhWyOKDJt7VAG5zTvN4xgU+YpEolz2/KgSBjt6Uz59gIbApI0JlC9M96dwe1ydypTcWO4g5/PiolIIpJmYSFOCB0xR5isQAoXtgUr6kLQsIybgBDH+Oaky3kJjPTtVdFLDfjKA4J/wA/SnKMxhwxHtVcwcwjlgp3ZxUGYvX9DT3fKkEn8artwcA5rOTGiQ7MEdCehpFwXG6UqM8nBOKI3Kj7qEf7Sg/zo81i33Yx9EFIpJBuIPDnA6GnAzY6vj60isS2cL+CihpDx3+tIY9i5XHNRMGzyDn3oLA0EjPNS1cpIBmjk8mjI9KQnjAp2Gf/2Q==" alt="Irsyad Store" class="w-full h-full object-cover rounded-xl">
+                        </div>
+                        <div>
+                            <h3 class="font-cyber font-bold text-white text-base">Irsyad Store</h3>
+                            <p class="text-xs text-gray-400">Platform Top Up Game Terpercaya & Serba Instant</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap justify-center items-center gap-3">
+                        <button onclick="openRedirectModal('instagram')" class="px-4 py-2 rounded-xl bg-brand-card border border-brand-border text-gray-300 hover:text-white hover:border-brand-pink transition-all text-xs font-bold flex items-center gap-2">
+                            <i class="fa-brands fa-instagram text-brand-pink text-base"></i> Instagram
+                        </button>
+                        <button onclick="openRedirectModal('whatsapp')" class="px-4 py-2 rounded-xl bg-brand-card border border-brand-border text-gray-300 hover:text-white hover:border-emerald-500 transition-all text-xs font-bold flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-base"></i> WhatsApp CS
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pt-6 text-center text-xs text-gray-500 font-medium">
+                    
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Notifikasi Saran & Kritik -->
+    <div id="feedbackToast" class="feedback-toast" role="status" aria-live="polite">
+        <div class="toast-icon"><i class="fa-solid fa-check text-white"></i></div>
+        <div>
+            <h4 class="text-white font-bold text-sm">Terima kasih!</h4>
+            <p class="text-[11px] text-gray-400">Saran & kritik Anda berhasil terkirim.</p>
+        </div>
+        <div class="toast-bar"></div>
+    </div>
+
+    <!-- Top Up Purchasing Modal -->
+    <div id="topUpModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+        <div class="bg-brand-card max-w-2xl w-full rounded-3xl border border-brand-cyan/40 p-6 sm:p-8 modal-fade my-8 max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between pb-4 border-b border-brand-border">
+                <div class="flex items-center gap-3">
+                    <img id="modalGameIcon" src="" alt="Game Icon" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl object-cover border border-brand-cyan/50">
+                    <div>
+                        <h3 id="modalGameTitle" class="font-cyber text-lg sm:text-xl font-black text-white">Top Up Game</h3>
+                        <p class="text-xs text-brand-cyan font-bold">Proses Otomatis Direct ID</p>
+                    </div>
+                </div>
+                <button onclick="closeTopUpModal()" class="w-9 h-9 rounded-xl bg-brand-dark border border-brand-border text-gray-400 hover:text-white hover:border-red-500 transition-all flex items-center justify-center">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form id="topUpForm" onsubmit="processOrder(event)" class="mt-6 space-y-6">
+                <!-- Step 1: Single Account ID Input -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-2">
+                        <span class="w-5 h-5 rounded-full bg-brand-cyan text-brand-dark text-[10px] flex items-center justify-center font-black">1</span>
+                        Masukkan ID Akun / User ID
+                    </label>
+                    <input type="text" id="userIdInput" required placeholder="Masukkan ID Akun Anda (Contoh: 12345678)" class="w-full px-4 py-3 rounded-xl bg-brand-dark border border-brand-border text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-cyan">
+                </div>
+
+                <!-- Step 2: Nominal Pricing Matrix -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-2">
+                        <span class="w-5 h-5 rounded-full bg-brand-cyan text-brand-dark text-[10px] flex items-center justify-center font-black">2</span>
+                        Pilih Nominal Top Up
+                    </label>
+                    <div id="nominalGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- Step 3: Payment Selection -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-2">
+                        <span class="w-5 h-5 rounded-full bg-brand-cyan text-brand-dark text-[10px] flex items-center justify-center font-black">3</span>
+                        Pilih Metode Pembayaran
+                    </label>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="payment" value="DANA" class="peer hidden" checked>
+                            <div class="p-3 rounded-xl bg-brand-dark border border-brand-border peer-checked:border-brand-cyan peer-checked:bg-brand-cyan/10 text-center transition-all">
+                                <i class="fa-solid fa-wallet text-blue-400 text-xl mb-1"></i>
+                                <div class="text-xs font-bold text-white">DANA</div>
+                                <div class="text-[10px] text-gray-400">E-Wallet</div>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="payment" value="GoPay" class="peer hidden">
+                            <div class="p-3 rounded-xl bg-brand-dark border border-brand-border peer-checked:border-brand-cyan peer-checked:bg-brand-cyan/10 text-center transition-all">
+                                <i class="fa-solid fa-mobile-screen text-emerald-400 text-xl mb-1"></i>
+                                <div class="text-xs font-bold text-white">GoPay</div>
+                                <div class="text-[10px] text-gray-400">E-Wallet</div>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="payment" value="OVO" class="peer hidden">
+                            <div class="p-3 rounded-xl bg-brand-dark border border-brand-border peer-checked:border-brand-cyan peer-checked:bg-brand-cyan/10 text-center transition-all">
+                                <i class="fa-solid fa-coins text-purple-400 text-xl mb-1"></i>
+                                <div class="text-xs font-bold text-white">OVO</div>
+                                <div class="text-[10px] text-gray-400">E-Wallet</div>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="payment" value="ShopeePay" class="peer hidden">
+                            <div class="p-3 rounded-xl bg-brand-dark border border-brand-border peer-checked:border-brand-cyan peer-checked:bg-brand-cyan/10 text-center transition-all">
+                                <i class="fa-solid fa-bag-shopping text-orange-400 text-xl mb-1"></i>
+                                <div class="text-xs font-bold text-white">ShopeePay</div>
+                                <div class="text-[10px] text-gray-400">E-Wallet</div>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="payment" value="Bank Transfer" class="peer hidden">
+                            <div class="p-3 rounded-xl bg-brand-dark border border-brand-border peer-checked:border-brand-cyan peer-checked:bg-brand-cyan/10 text-center transition-all">
+                                <i class="fa-solid fa-building-columns text-cyan-400 text-xl mb-1"></i>
+                                <div class="text-xs font-bold text-white">Bank Transfer</div>
+                                <div class="text-[10px] text-gray-400">BCA / Mandiri / BRI</div>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="payment" value="Pulsa Telkomsel" id="pulsaRadio" class="peer hidden">
+                            <div class="p-3 rounded-xl bg-brand-dark border border-brand-border peer-checked:border-brand-cyan peer-checked:bg-brand-cyan/10 text-center transition-all">
+                                <i class="fa-solid fa-sim-card text-red-400 text-xl mb-1"></i>
+                                <div class="text-xs font-bold text-white">Pulsa</div>
+                                <select id="pulsaProvider" onchange="selectPulsaProvider(this.value)" class="mt-1 w-full px-1 py-1 rounded-lg bg-brand-card border border-brand-border text-[11px] text-white focus:outline-none focus:border-brand-cyan cursor-pointer">
+                                    <option value="Pulsa Telkomsel">Telkomsel</option>
+                                    <option value="Pulsa XL">XL</option>
+                                    <option value="Pulsa Smartfren">Smartfren</option>
+                                    <option value="Pulsa AXIS">AXIS</option>
+                                    <option value="Pulsa Tri">Tri</option>
+                                    <option value="Pulsa Indosat">Indosat</option>
+                                </select>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Display Payment Invoice Section (Appears after clicking Bayar) -->
+                <div id="invoiceSection" class="hidden p-4 rounded-2xl bg-brand-dark border border-brand-cyan/50 space-y-3">
+                    <div class="flex items-center justify-between border-b border-brand-border pb-2">
+                        <span class="text-xs font-bold text-brand-cyan">DETAIL PEMBAYARAN</span>
+                        <span id="invoiceStatus" class="text-[10px] px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400 font-bold">MENUNGGU PEMBAYARAN</span>
+                    </div>
+                    <div class="space-y-1 text-xs text-gray-300">
+                        <div class="flex justify-between"><span>Game:</span><span id="invGame" class="font-bold text-white"></span></div>
+                        <div class="flex justify-between"><span>ID Akun:</span><span id="invUser" class="font-bold text-white"></span></div>
+                        <div class="flex justify-between"><span>Nominal:</span><span id="invNominal" class="font-bold text-white"></span></div>
+                        <div class="flex justify-between"><span>Metode:</span><span id="invPayment" class="font-bold text-white"></span></div>
+                        <div class="flex justify-between text-sm pt-2 border-t border-brand-border font-extrabold"><span>Total Tagihan:</span><span id="invTotal" class="text-brand-cyan"></span></div>
+                    </div>
+                    <!-- Payment Instructions Dynamic Display -->
+                    <div id="paymentInstructions" class="pt-2 text-center">
+                        <!-- Rendered via JS based on selected payment -->
+                    </div>
+                    <button type="button" onclick="confirmPaymentSuccess()" class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs transition-colors mt-2 flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp"></i> Konfirmasi Pembayaran via WhatsApp
+                    </button>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="paySubmitBtn" class="w-full py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-brand-cyan via-blue-600 to-brand-purple text-brand-dark font-black text-sm sm:text-base hover:brightness-110 transition-all shadow-lg shadow-brand-cyan/20 flex items-center justify-center gap-2 active:scale-95">
+                    <i class="fa-solid fa-credit-card"></i> BAYAR SEKARANG
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Redirect Overlay Modal -->
+    <div id="redirectModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="bg-brand-card max-w-md w-full rounded-3xl border border-brand-cyan/40 p-6 text-center modal-fade">
+            <div id="redirectIconContainer" class="w-16 h-16 rounded-2xl mx-auto flex items-center justify-center text-3xl mb-4">
+                <!-- Icon via JS -->
+            </div>
+            <h3 id="redirectTitle" class="font-cyber text-xl font-black text-white mb-2">Mengarahkan...</h3>
+            <p id="redirectDesc" class="text-xs text-gray-400 mb-6">Anda akan dialihkan ke layanan Irsyad Store.</p>
+            <div class="w-full bg-brand-dark rounded-full h-2 mb-6 overflow-hidden border border-brand-border">
+                <div id="redirectProgressBar" class="bg-gradient-to-r from-brand-cyan to-brand-pink h-full w-0 transition-all duration-1000"></div>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="cancelRedirect()" class="w-1/2 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-gray-300 font-bold hover:bg-brand-border transition-colors text-xs">Batal</button>
+                <button onclick="proceedRedirect()" class="w-1/2 py-2.5 rounded-xl bg-brand-cyan text-brand-dark font-black hover:brightness-110 transition-colors text-xs">Buka Aplikasi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Core Logic -->
+    <script>
+        // Light / Dark Mode
+        function applyTheme(theme) {
+            const isLight = theme === 'light';
+            document.body.classList.toggle('light-mode', isLight);
+
+            const icon = document.getElementById('themeIcon');
+            const button = document.getElementById('themeToggle');
+
+            if (icon && button) {
+                icon.className = isLight ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+                button.setAttribute(
+                    'aria-label',
+                    isLight ? 'Aktifkan mode gelap' : 'Aktifkan mode terang'
+                );
+            }
+            localStorage.setItem('irsyadStoreTheme', theme);
+        }
+
+        function toggleTheme() {
+            const nextTheme = document.body.classList.contains('light-mode')
+                ? 'dark'
+                : 'light';
+            applyTheme(nextTheme);
+        }
+
+        function loadSavedTheme() {
+            const savedTheme = localStorage.getItem('irsyadStoreTheme') || 'dark';
+            applyTheme(savedTheme);
+        }
+
+        // Full Specific Game & Pricing Catalog
+        const gameCatalog = [
+            {
+                id: 'mlbb',
+                title: 'Mobile Legends',
+                publisher: 'Moonton',
+                icon: 'Https://play-lh.googleusercontent.com/MztmLpB1-_eFbHnqNzzvzl5zjiOH2BEb0D71uBxZYf_4BEmW3QEPWODhRtyqY7Qz4wRLwQ--Rg1RAjOFqtHSs-o=s0-br30',
+                nominals: [
+                    { id: 'ml_3', name: '3 Diamonds', price: 'Rp 1.500' },
+                    { id: 'ml_5', name: '5 Diamonds', price: 'Rp 2.000' },
+                    { id: 'ml_12', name: '12 Diamonds', price: 'Rp 4.000' },
+                    { id: 'ml_19', name: '19 Diamonds', price: 'Rp 5.500' },
+                    { id: 'ml_28', name: '28 Diamonds', price: 'Rp 8.500' },
+                    { id: 'ml_36', name: '36 Diamonds', price: 'Rp 10.500' },
+                    { id: 'ml_44', name: '44 Diamonds', price: 'Rp 12.500' },
+                    { id: 'ml_59', name: '59 Diamonds', price: 'Rp 16.000' },
+                    { id: 'ml_85', name: '85 Diamonds', price: 'Rp 23.000' },
+                    { id: 'ml_170', name: '170 Diamonds', price: 'Rp 45.000' },
+                    { id: 'ml_240', name: '240 Diamonds', price: 'Rp 63.000' },
+                    { id: 'ml_296', name: '296 Diamonds', price: 'Rp 78.000' },
+                    { id: 'ml_408', name: '408 Diamonds', price: 'Rp 108.000' },
+                    { id: 'ml_568', name: '568 Diamonds', price: 'Rp 148.000' },
+                    { id: 'ml_875', name: '875 Diamonds', price: 'Rp 228.000' },
+                    { id: 'ml_1159', name: '1159 Diamonds', price: 'Rp 300.000' },
+                    { id: 'ml_2010', name: '2010 Diamonds', price: 'Rp 519.000' },
+                    { id: 'ml_2549', name: '2549 Diamonds', price: 'Rp 655.000' },
+                    { id: 'ml_4003', name: '4003 Diamonds', price: 'Rp 1.020.000' },
+                    { id: 'ml_pass', name: 'Weekly Diamond Pass', price: 'Rp 28.000' },
+                    { id: 'ml_twilight', name: 'Twilight Pass', price: 'Rp 145.000' }
+                ]
+            },
+            {
+                id: 'ff',
+                title: 'Free Fire',
+                publisher: 'Garena',
+                icon: 'https://play-lh.googleusercontent.com/hnnIRd5AAf7T2gWzwki00aA9aWMX9JUbr8N42WjGqSVEq36Ey5_T0GCvyekeBkn_rSknR3vXvF4zTkZh4j-KRw=w240-h480-rw',
+                nominals: [
+                    { id: 'ff_5', name: '5 Diamonds', price: 'Rp 1.000' },
+                    { id: 'ff_12', name: '12 Diamonds', price: 'Rp 2.000' },
+                    { id: 'ff_50', name: '50 Diamonds', price: 'Rp 7.000' },
+                    { id: 'ff_70', name: '70 Diamonds', price: 'Rp 9.500' },
+                    { id: 'ff_100', name: '100 Diamonds', price: 'Rp 13.500' },
+                    { id: 'ff_140', name: '140 Diamonds', price: 'Rp 19.000' },
+                    { id: 'ff_210', name: '210 Diamonds', price: 'Rp 28.000' },
+                    { id: 'ff_355', name: '355 Diamonds', price: 'Rp 47.000' },
+                    { id: 'ff_500', name: '500 Diamonds', price: 'Rp 65.000' },
+                    { id: 'ff_720', name: '720 Diamonds', price: 'Rp 92.000' },
+                    { id: 'ff_1000', name: '1000 Diamonds', price: 'Rp 130.000' },
+                    { id: 'ff_1450', name: '1450 Diamonds', price: 'Rp 188.000' },
+                    { id: 'ff_2000', name: '2000 Diamonds', price: 'Rp 259.000' },
+                    { id: 'ff_2180', name: '2180 Diamonds', price: 'Rp 282.000' },
+                    { id: 'ff_3640', name: '3640 Diamonds', price: 'Rp 470.000' },
+                    { id: 'ff_7290', name: '7290 Diamonds', price: 'Rp 940.000' },
+                    { id: 'ff_weekly', name: 'Membership Mingguan', price: 'Rp 30.000' },
+                    { id: 'ff_monthly', name: 'Membership Bulanan', price: 'Rp 120.000' }
+                ]
+            },
+            {
+                id: 'pubg',
+                title: 'PUBG Mobile',
+                publisher: 'Tencent Games',
+                icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_I2Nybqh-kSC7JR6KwiU205wuuXkYQjvUHW_HpAtOyZMBll4yWZTgX5N7&s=10',
+                nominals: [
+                    { id: 'pubg_60', name: '60 UC', price: 'Rp 14.500' },
+                    { id: 'pubg_120', name: '120 UC', price: 'Rp 29.000' },
+                    { id: 'pubg_180', name: '180 UC', price: 'Rp 43.500' },
+                    { id: 'pubg_240', name: '240 UC', price: 'Rp 57.500' },
+                    { id: 'pubg_325', name: '325 UC', price: 'Rp 72.000' },
+                    { id: 'pubg_385', name: '385 UC', price: 'Rp 85.000' },
+                    { id: 'pubg_660', name: '660 UC', price: 'Rp 143.000' },
+                    { id: 'pubg_720', name: '720 UC', price: 'Rp 155.000' },
+                    { id: 'pubg_985', name: '985 UC', price: 'Rp 215.000' },
+                    { id: 'pubg_1320', name: '1320 UC', price: 'Rp 285.000' },
+                    { id: 'pubg_1800', name: '1800 UC', price: 'Rp 355.000' },
+                    { id: 'pubg_2460', name: '2460 UC', price: 'Rp 485.000' },
+                    { id: 'pubg_3850', name: '3850 UC', price: 'Rp 710.000' },
+                    { id: 'pubg_8100', name: '8100 UC', price: 'Rp 1.450.000' }
+                ]
+            },
+            {
+                id: 'genshin',
+                title: 'Genshin Impact',
+                publisher: 'Hoyoverse',
+                icon: 'https://static.wikia.nocookie.net/gensin-impact/images/8/80/Genshin_Impact.png/revision/latest?cb=20240331104358',
+                nominals: [
+                    { id: 'gi_welkin', name: 'Blessing of the Welkin Moon', price: 'Rp 79.000' },
+                    { id: 'gi_60', name: '60 Genesis Crystals', price: 'Rp 16.000' },
+                    { id: 'gi_120', name: '120 Genesis Crystals', price: 'Rp 32.000' },
+                    { id: 'gi_300', name: '300+30 Genesis Crystals', price: 'Rp 79.000' },
+                    { id: 'gi_600', name: '600 Genesis Crystals', price: 'Rp 158.000' },
+                    { id: 'gi_980', name: '980+110 Genesis Crystals', price: 'Rp 245.000' },
+                    { id: 'gi_1980', name: '1980+260 Genesis Crystals', price: 'Rp 490.000' },
+                    { id: 'gi_3280', name: '3280+600 Genesis Crystals', price: 'Rp 790.000' },
+                    { id: 'gi_6480', name: '6480+1600 Genesis Crystals', price: 'Rp 1.580.000' }
+                ]
+            },
+            {
+                id: 'valorant',
+                title: 'Valorant',
+                publisher: 'Riot Games',
+                icon: 'Https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwwMbaM9KdqPxESo4-JF87bfEGz6O0lQVRaw&s',
+                nominals: [
+                    { id: 'val_475', name: '475 VP', price: 'Rp 55.000' },
+                    { id: 'val_700', name: '700 VP', price: 'Rp 80.000' },
+                    { id: 'val_1000', name: '1000 VP', price: 'Rp 110.000' },
+                    { id: 'val_1375', name: '1375 VP', price: 'Rp 150.000' },
+                    { id: 'val_2050', name: '2050 VP', price: 'Rp 220.000' },
+                    { id: 'val_3650', name: '3650 VP', price: 'Rp 385.000' },
+                    { id: 'val_5350', name: '5350 VP', price: 'Rp 560.000' },
+                    { id: 'val_11000', name: '11000 VP', price: 'Rp 1.150.000' }
+                ]
+            },
+            {
+                id: 'hok',
+                title: 'Honor of Kings',
+                publisher: 'Level Infinite',
+                icon: 'https://play-lh.googleusercontent.com/hEm5NVeEv7UfFJaK8GZdfWe7p3DB_VvYx57qIEHbR0tMV_NToziH0Vbgd6CxLiWF-iURpAe-jsC_UGUDt0diPQ',
+                nominals: [
+                    { id: 'hok_16', name: '16 Tokens', price: 'Rp 3.500' },
+                    { id: 'hok_32', name: '32 Tokens', price: 'Rp 7.000' },
+                    { id: 'hok_80', name: '80+8 Tokens', price: 'Rp 16.000' },
+                    { id: 'hok_160', name: '160+16 Tokens', price: 'Rp 32.000' },
+                    { id: 'hok_240', name: '240+24 Tokens', price: 'Rp 48.000' },
+                    { id: 'hok_400', name: '400+45 Tokens', price: 'Rp 79.000' },
+                    { id: 'hok_800', name: '800+110 Tokens', price: 'Rp 158.000' },
+                    { id: 'hok_1200', name: '1200+170 Tokens', price: 'Rp 237.000' },
+                    { id: 'hok_2400', name: '2400+360 Tokens', price: 'Rp 474.000' },
+                    { id: 'hok_w_card', name: 'Weekly Card', price: 'Rp 16.000' },
+                    { id: 'hok_w_card_p', name: 'Weekly Card Plus', price: 'Rp 48.000' }
+                ]
+            },
+            {
+                id: 'fcmobile',
+                title: ' FC Mobile',
+                publisher: 'FIFA Sports',
+                icon: 'https://cdn.aptoide.com/imgs/8/b/d/8bdee7f15fa63fde7e8b27040c1e8215_icon.png',
+                nominals: [
+                    { id: 'fc_100', name: '100 FC Points', price: 'Rp 16.000' },
+                    { id: 'fc_200', name: '200 FC Points', price: 'Rp 31.500' },
+                    { id: 'fc_300', name: '300 FC Points', price: 'Rp 47.000' },
+                    { id: 'fc_520', name: '520 FC Points', price: 'Rp 79.000' },
+                    { id: 'fc_1070', name: '1070 FC Points', price: 'Rp 158.000' },
+                    { id: 'fc_2200', name: '2200 FC Points', price: 'Rp 315.000' },
+                    { id: 'fc_3000', name: '3000 FC Points', price: 'Rp 420.000' },
+                    { id: 'fc_5700', name: '5700 FC Points', price: 'Rp 790.000' },
+                    { id: 'fc_12000', name: '12000 FC Points', price: 'Rp 1.580.000' }
+                ]
+            },
+            {
+                id: 'roblox',
+                title: 'Roblox',
+                publisher: 'Roblox Corp',
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/1/1e/Roblox_Logo_2025.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original',
+                nominals: [
+                    { id: 'rbx_80', name: '80 Robux', price: 'Rp 18.000' },
+                    { id: 'rbx_240', name: '240 Robux', price: 'Rp 48.000' },
+                    { id: 'rbx_400', name: '400 Robux', price: 'Rp 75.000' },
+                    { id: 'rbx_800', name: '800 Robux', price: 'Rp 148.000' },
+                    { id: 'rbx_1700', name: '1700 Robux', price: 'Rp 298.000' },
+                    { id: 'rbx_4500', name: '4500 Robux', price: 'Rp 748.000' },
+                    { id: 'rbx_10000', name: '10000 Robux', price: 'Rp 1.650.000' }
+                ]
+            },
+            {
+                id: 'efootball',
+                title: 'eFootball ',
+                publisher: 'Konami',
+                icon: 'https://img.konami.com/efootball/s/img/main_page_1_sp.png?v=1058',
+                nominals: [
+                    { id: 'ef_130', name: '130 eFootball Coins', price: 'Rp 16.000' },
+                    { id: 'ef_300', name: '300 eFootball Coins', price: 'Rp 35.000' },
+                    { id: 'ef_550', name: '550 eFootball Coins', price: 'Rp 63.000' },
+                    { id: 'ef_750', name: '750 eFootball Coins', price: 'Rp 88.000' },
+                    { id: 'ef_1040', name: '1040 eFootball Coins', price: 'Rp 125.000' },
+                    { id: 'ef_1600', name: '1600 eFootball Coins', price: 'Rp 190.000' },
+                    { id: 'ef_2130', name: '2130 eFootball Coins', price: 'Rp 248.000' },
+                    { id: 'ef_3250', name: '3250 eFootball Coins', price: 'Rp 375.000' },
+                    { id: 'ef_5700', name: '5700 eFootball Coins', price: 'Rp 625.000' },
+                    { id: 'ef_12000', name: '12000 eFootball Coins', price: 'Rp 1.300.000' }
+                ]
+            },
+            {
+                id: 'hsr',
+                title: 'Honkai: Star Rail',
+                publisher: 'Hoyoverse',
+                icon: 'https://cdn.aptoide.com/imgs/e/3/7/e37312552c0629a4b657597927360d86_icon.png',
+                nominals: [
+                    { id: 'hsr_express', name: 'Express Supply Pass', price: 'Rp 79.000' },
+                    { id: 'hsr_60', name: '60 Oneiric Shard', price: 'Rp 16.000' },
+                    { id: 'hsr_120', name: '120 Oneiric Shard', price: 'Rp 32.000' },
+                    { id: 'hsr_300', name: '300+30 Oneiric Shard', price: 'Rp 79.000' },
+                    { id: 'hsr_600', name: '600 Oneiric Shard', price: 'Rp 158.000' },
+                    { id: 'hsr_980', name: '980+110 Oneiric Shard', price: 'Rp 245.000' },
+                    { id: 'hsr_1980', name: '1980+260 Oneiric Shard', price: 'Rp 490.000' },
+                    { id: 'hsr_3280', name: '3280+600 Oneiric Shard', price: 'Rp 790.000' },
+                    { id: 'hsr_6480', name: '6480+1600 Oneiric Shard', price: 'Rp 1.580.000' }
+                ]
+            },
+            {
+                id: 'csgo',
+                title: 'CS:GO',
+                publisher: 'Valve',
+                icon: 'https://down-id.img.susercontent.com/file/6cac8f576adc7185bdea3ef344199a61',
+                nominals: [
+                    { id: 'cs_12', name: 'Steam Wallet Rp 12.000', price: 'Rp 13.500' },
+                    { id: 'cs_45', name: 'Steam Wallet Rp 45.000', price: 'Rp 48.000' },
+                    { id: 'cs_60', name: 'Steam Wallet Rp 60.000', price: 'Rp 64.000' },
+                    { id: 'cs_90', name: 'Steam Wallet Rp 90.000', price: 'Rp 95.000' },
+                    { id: 'cs_120', name: 'Steam Wallet Rp 120.000', price: 'Rp 126.000' },
+                    { id: 'cs_250', name: 'Steam Wallet Rp 250.000', price: 'Rp 261.000' },
+                    { id: 'cs_400', name: 'Steam Wallet Rp 400.000', price: 'Rp 417.000' },
+                    { id: 'cs_600', name: 'Steam Wallet Rp 600.000', price: 'Rp 625.000' }
+                ]
+            },
+            {
+                id: 'cod',
+                title: 'Call of Duty Mobile',
+                publisher: 'Activision',
+                icon: 'https://static.wikia.nocookie.net/callofduty/images/e/e7/App_Icon_CODM_Garena_Ghost.png/revision/latest/scale-to-width-down/250?cb=20230928121817',
+                nominals: [
+                    { id: 'cod_31', name: '31 CP', price: 'Rp 5.000' },
+                    { id: 'cod_63', name: '63 CP', price: 'Rp 10.000' },
+                    { id: 'cod_128', name: '128 CP', price: 'Rp 20.000' },
+                    { id: 'cod_321', name: '321 CP', price: 'Rp 49.000' },
+                    { id: 'cod_645', name: '645 CP', price: 'Rp 98.000' },
+                    { id: 'cod_800', name: '800 CP', price: 'Rp 120.000' },
+                    { id: 'cod_1373', name: '1373 CP', price: 'Rp 205.000' },
+                    { id: 'cod_2060', name: '2060 CP', price: 'Rp 305.000' },
+                    { id: 'cod_3564', name: '3564 CP', price: 'Rp 520.000' },
+                    { id: 'cod_7480', name: '7480 CP', price: 'Rp 1.080.000' }
+                ]
+            },
+            {
+                id: 'coc',
+                title: 'Clash of Clans',
+                publisher: 'Supercell',
+                icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj7RGKdGBIMITT_eoQfSWQzXSiYw8tGEK9p4zCC7fMoO7Pj3aqzHb-UoIw&s=10',
+                nominals: [
+                    { id: 'coc_80', name: '80 Gems', price: 'Rp 16.000' },
+                    { id: 'coc_500', name: '500 Gems', price: 'Rp 79.000' },
+                    { id: 'coc_1200', name: '1200 Gems', price: 'Rp 158.000' },
+                    { id: 'coc_2500', name: '2500 Gems', price: 'Rp 315.000' },
+                    { id: 'coc_6500', name: '6500 Gems', price: 'Rp 790.000' },
+                    { id: 'coc_14000', name: '14000 Gems', price: 'Rp 1.580.000' },
+                    { id: 'coc_gold', name: 'Gold Pass', price: 'Rp 79.000' }
+                ]
+            },
+            {
+                id: 'magicchess',
+                title: 'Magic Chess',
+                publisher: 'Moonton',
+                icon: 'https://kaleoz-media.seagmcdn.com/kaleoz-store/202509/oss-2fd5a49f4fb2f86ea5cc20228a375367.jpeg?x-oss-process=image/format,webp',
+                nominals: [
+                    { id: 'mc_3', name: '3 Diamonds', price: 'Rp 1.500' },
+                    { id: 'mc_5', name: '5 Diamonds', price: 'Rp 2.000' },
+                    { id: 'mc_12', name: '12 Diamonds', price: 'Rp 4.000' },
+                    { id: 'mc_19', name: '19 Diamonds', price: 'Rp 5.500' },
+                    { id: 'mc_28', name: '28 Diamonds', price: 'Rp 8.500' },
+                    { id: 'mc_44', name: '44 Diamonds', price: 'Rp 12.500' },
+                    { id: 'mc_59', name: '59 Diamonds', price: 'Rp 16.000' },
+                    { id: 'mc_85', name: '85 Diamonds', price: 'Rp 23.000' },
+                    { id: 'mc_170', name: '170 Diamonds', price: 'Rp 45.000' },
+                    { id: 'mc_240', name: '240 Diamonds', price: 'Rp 63.000' },
+                    { id: 'mc_296', name: '296 Diamonds', price: 'Rp 78.000' },
+                    { id: 'mc_408', name: '408 Diamonds', price: 'Rp 108.000' },
+                    { id: 'mc_568', name: '568 Diamonds', price: 'Rp 148.000' },
+                    { id: 'mc_875', name: '875 Diamonds', price: 'Rp 228.000' }
+                ]
+            }
+        ];
+
+        // Sample Customer Feedbacks Database
+        let customerFeedbacks = [
+            { name: 'Rizky Pratama', category: 'Saran', rating: 5, msg: 'Top up Mobile Legends sangat cepat, belum ada 3 detik diamond langsung masuk akun!', time: 'Baru saja' },
+            { name: 'Dimas Anggara', category: 'Saran', rating: 5, msg: 'Pelayanan CS ramah banget dan harga termurah dibandingkan toko lain.', time: '1 jam lalu' },
+            { name: 'Siti Rahma', category: 'Kritik', rating: 4, msg: 'Semoga metode pembayaran QRIS bisa lebih banyak pilihan bank-nya ke depan.', time: 'Kemarin' }
+        ];
+
+        // Simpan & muat ulasan agar tidak hilang saat halaman dibuka ulang
+        const FEEDBACK_STORAGE_KEY = 'irsyadStoreFeedbacks';
+
+        function timeAgoLabel(ts) {
+            const diff = Math.floor((Date.now() - ts) / 1000);
+            if (diff < 60) return 'Baru saja';
+            if (diff < 3600) return Math.floor(diff / 60) + ' menit lalu';
+            if (diff < 86400) return Math.floor(diff / 3600) + ' jam lalu';
+            return Math.floor(diff / 86400) + ' hari lalu';
+        }
+
+        function saveFeedbacks() {
+            try {
+                const userOnly = customerFeedbacks.filter(f => f.ts);
+                localStorage.setItem(FEEDBACK_STORAGE_KEY, JSON.stringify(userOnly));
+            } catch (e) {}
+        }
+
+        function loadSavedFeedbacks() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(FEEDBACK_STORAGE_KEY) || '[]');
+                saved.forEach(f => { f.time = timeAgoLabel(f.ts); });
+                customerFeedbacks = saved.concat(customerFeedbacks);
+            } catch (e) {}
+        }
+
+        // State Store
+        let selectedGame = null;
+        let selectedNominal = null;
+        let selectedRating = 0;
+        let redirectTargetUrl = '';
+        let redirectTimer = null;
+
+        // Render Catalog Grid
+        function renderGames() {
+            const grid = document.getElementById('gameGrid');
+            const searchVal = document.getElementById('gameSearch').value.toLowerCase();
+            grid.innerHTML = '';
+
+            const filtered = gameCatalog.filter(game => {
+                const matchesSearch = game.title.toLowerCase().includes(searchVal) || game.publisher.toLowerCase().includes(searchVal);
+                return matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-gray-500">
+                        <i class="fa-solid fa-ghost text-4xl mb-2"></i>
+                        <p class="text-xs">Game tidak ditemukan dalam pencarian.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'bg-brand-card rounded-2xl p-2.5 sm:p-3.5 border border-brand-border hover:border-brand-cyan transition-all duration-300 cursor-pointer flex flex-col justify-between group hover:-translate-y-1 shadow-lg';
+                card.onclick = () => openTopUpModal(game.id);
+
+                card.innerHTML = `
+                    <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3 border border-brand-border/50 group-hover:border-brand-cyan/50 transition-colors">
+                        <img src="${game.icon}" alt="${game.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <h3 class="font-bold text-white text-xs sm:text-sm group-hover:text-brand-cyan transition-colors line-clamp-1">${game.title}</h3>
+                    <p class="text-[10px] text-gray-400 mb-3">${game.publisher}</p>
+                    <button class="w-full py-2 rounded-lg bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan text-xs font-bold group-hover:bg-brand-cyan group-hover:text-brand-dark transition-all">
+                        Top Up
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterGames() {
+            renderGames();
+        }
+
+        // Render Feedbacks List
+        function renderFeedbacks() {
+            const listEl = document.getElementById('customerFeedbackList');
+            listEl.innerHTML = '';
+
+            customerFeedbacks.forEach(item => {
+                const starsHtml = '<i class="fa-solid fa-star text-brand-gold"></i>'.repeat(item.rating);
+                const card = document.createElement('div');
+                card.className = 'p-4 rounded-2xl bg-brand-dark border border-brand-border/80 flex flex-col gap-2';
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-brand-pink/20 border border-brand-pink/40 flex items-center justify-center text-brand-pink font-bold text-xs">
+                                ${item.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white">${item.name}</h4>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 font-semibold">${item.category}</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="flex gap-0.5 text-xs">${starsHtml}</div>
+                            <span class="text-[10px] text-gray-500">${item.time}</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-300 pl-10">${item.msg}</p>
+                `;
+                listEl.appendChild(card);
+            });
+        }
+
+        // Purchase Modal Logic
+        function openTopUpModal(gameId) {
+            selectedGame = gameCatalog.find(g => g.id === gameId);
+            if (!selectedGame) return;
+
+            document.getElementById('modalGameTitle').innerText = selectedGame.title;
+            document.getElementById('modalGameIcon').src = selectedGame.icon;
+            document.getElementById('userIdInput').value = '';
+
+            const nominalGrid = document.getElementById('nominalGrid');
+            nominalGrid.innerHTML = '';
+            selectedNominal = null;
+
+            // Reset Invoice section state
+            document.getElementById('invoiceSection').classList.add('hidden');
+            document.getElementById('paySubmitBtn').classList.remove('hidden');
+
+            selectedGame.nominals.forEach((item, idx) => {
+                const label = document.createElement('label');
+                label.className = 'cursor-pointer';
+                label.innerHTML = `
+                    <input type="radio" name="nominal" value="${item.id}" class="peer hidden" ${idx === 0 ? 'checked' : ''} onchange="selectNominal('${item.id}')">
+                    <div class="p-3 rounded-xl bg-brand-dark border border-brand-border peer-checked:border-brand-cyan peer-checked:bg-brand-cyan/10 transition-all flex flex-col justify-between h-full">
+                        <div class="text-xs font-bold text-white mb-1 line-clamp-1">${item.name}</div>
+                        <div class="text-xs font-black text-brand-cyan">${item.price}</div>
+                    </div>
+                `;
+                nominalGrid.appendChild(label);
+            });
+
+            if (selectedGame.nominals.length > 0) {
+                selectedNominal = selectedGame.nominals[0];
+            }
+
+            document.getElementById('topUpModal').classList.remove('hidden');
+        }
+
+        function selectPulsaProvider(value) {
+            const radio = document.getElementById('pulsaRadio');
+            radio.value = value;
+            radio.checked = true;
+        }
+
+        function selectNominal(nominalId) {
+            if (!selectedGame) return;
+            selectedNominal = selectedGame.nominals.find(n => n.id === nominalId);
+        }
+
+        function closeTopUpModal() {
+            document.getElementById('topUpModal').classList.add('hidden');
+        }
+
+        function processOrder(e) {
+            e.preventDefault();
+            const userId = document.getElementById('userIdInput').value.trim();
+            const payment = document.querySelector('input[name="payment"]:checked').value;
+
+            if (!userId) {
+                alert('Silakan masukkan ID Akun Anda!');
+                return;
+            }
+
+            if (!selectedNominal) {
+                alert('Silakan pilih nominal top up!');
+                return;
+            }
+
+            // Populate Payment Gateway Direct Invoice
+            document.getElementById('invGame').innerText = selectedGame.title;
+            document.getElementById('invUser').innerText = userId;
+            document.getElementById('invNominal').innerText = selectedNominal.name;
+            document.getElementById('invPayment').innerText = payment;
+            document.getElementById('invTotal').innerText = selectedNominal.price;
+
+            const instEl = document.getElementById('paymentInstructions');
+            if (payment === 'Bank Transfer') {
+                instEl.innerHTML = `
+                    <p class="text-xs font-bold text-white">BCA: <span class="text-brand-cyan font-mono select-all">8831252133</span> a.n Irsyad Store</p>
+                    <p class="text-[11px] text-gray-400 mt-1">Transfer sesuai nominal, lalu konfirmasi ke WhatsApp: <strong class="text-brand-cyan">082125213397</strong>.</p>
+                `;
+            } else {
+                instEl.innerHTML = `
+                    <p class="text-xs font-bold text-white">Nomor ${payment}: <span class="text-brand-cyan font-mono select-all">082125213397</span></p>
+                    <p class="text-[11px] text-gray-400 mt-1">Kirim pembayaran sebesar ${selectedNominal.price} dan konfirmasi ke nomor WhatsApp tersebut.</p>
+                `;
+            }
+
+            document.getElementById('invoiceSection').classList.remove('hidden');
+            document.getElementById('paySubmitBtn').classList.add('hidden');
+        }
+
+        function confirmPaymentSuccess() {
+            const userId = document.getElementById('userIdInput').value.trim();
+            const gameTitle = selectedGame ? selectedGame.title : '';
+            const nominalName = selectedNominal ? selectedNominal.name : '';
+            const nominalPrice = selectedNominal ? selectedNominal.price : '';
+            const payment = document.querySelector('input[name="payment"]:checked') ? document.querySelector('input[name="payment"]:checked').value : '';
+
+            // Format WhatsApp Direct Message Text
+            const waMessage = `Halo Irsyad Store, saya sudah melakukan pembayaran top up:%0A- Game: ${gameTitle}%0A- ID Akun: ${userId}%0A- Nominal: ${nominalName} (${nominalPrice})%0A- Metode: ${payment}%0A%0ABerikut bukti transfernya:`;
+            const waUrl = `https://wa.me/6282125213397?text=${waMessage}`;
+
+            document.getElementById('invoiceStatus').className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold';
+            document.getElementById('invoiceStatus').innerText = 'MENGALIHKAN KE WHATSAPP...';
+
+            window.open(waUrl, '_blank');
+
+            setTimeout(() => {
+                closeTopUpModal();
+            }, 1000);
+        }
+
+        // Rating Feedback Logic
+        function setRating(rating) {
+            selectedRating = rating;
+            const stars = document.querySelectorAll('.star-btn');
+            const labels = ['', 'Sangat Buruk 😞', 'Kurang Baik 😐', 'Cukup Baik 🙂', 'Sangat Bagus 😊', 'Luar Biasa Perfect! ⭐'];
+
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('text-gray-600');
+                    star.classList.add('text-brand-gold');
+                } else {
+                    star.classList.remove('text-brand-gold');
+                    star.classList.add('text-gray-600');
+                }
+            });
+
+            document.getElementById('ratingLabel').innerText = labels[rating] || 'Pilih rating bintang';
+        }
+
+        function submitFeedback() {
+            const name = document.getElementById('feedbackName').value.trim();
+            const category = document.getElementById('feedbackCategory').value;
+            const msg = document.getElementById('feedbackMsg').value.trim();
+
+            if (selectedRating === 0) {
+                alert('Silakan berikan rating bintang terlebih dahulu!');
+                return;
+            }
+
+            if (!name || !msg) {
+                alert('Silakan isi Nama dan Pesan Saran/Kritik Anda!');
+                return;
+            }
+
+            // Push to local list & re-render directly into Customer Feedback column
+            customerFeedbacks.unshift({
+                name: name,
+                category: category,
+                rating: selectedRating,
+                msg: msg,
+                time: 'Baru saja',
+                ts: Date.now()
+            });
+            saveFeedbacks();
+            renderFeedbacks();
+
+            // Animasi notifikasi
+            showFeedbackToast();
+            const newCard = document.getElementById('customerFeedbackList').firstElementChild;
+            if (newCard) newCard.classList.add('feedback-new');
+
+            // Clear form
+            document.getElementById('feedbackName').value = '';
+            document.getElementById('feedbackMsg').value = '';
+            setRating(0);
+
+            // Smooth scroll into customer feedback section
+            document.getElementById('customerFeedbackList').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        let feedbackToastTimer = null;
+        function showFeedbackToast() {
+            const toast = document.getElementById('feedbackToast');
+            toast.classList.remove('show');
+            void toast.offsetWidth; // restart animasi
+            toast.classList.add('show');
+            clearTimeout(feedbackToastTimer);
+            feedbackToastTimer = setTimeout(() => toast.classList.remove('show'), 3700);
+        }
+
+        // Redirect Modal Animation Handler
+        function openRedirectModal(type) {
+            if (type === 'instagram') {
+                const url = 'https://instagram.com/irsyd4_?dlrf=MWRyanIzMXk2OHR0Mw%3D%3D';
+                triggerRedirectModal('instagram', 'Membuka Instagram Official', 'Anda akan dialihkan ke Instagram @irsyd4_', url);
+            } else if (type === 'whatsapp') {
+                const url = 'https://wa.me/6282125213397';
+                triggerRedirectModal('whatsapp', 'Membuka Customer Service WhatsApp', 'Anda akan dialihkan ke nomor WhatsApp 082125213397', url);
+            }
+        }
+
+        function triggerRedirectModal(type, title, desc, targetUrl) {
+            redirectTargetUrl = targetUrl;
+            const modal = document.getElementById('redirectModal');
+            const iconContainer = document.getElementById('redirectIconContainer');
+            const titleEl = document.getElementById('redirectTitle');
+            const descEl = document.getElementById('redirectDesc');
+            const progressBar = document.getElementById('redirectProgressBar');
+
+            titleEl.innerText = title;
+            descEl.innerText = desc;
+            progressBar.style.width = '0%';
+
+            if (type === 'instagram') {
+                iconContainer.className = 'w-16 h-16 rounded-2xl mx-auto flex items-center justify-center text-3xl mb-4 bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 text-white';
+                iconContainer.innerHTML = '<i class="fa-brands fa-instagram"></i>';
+            } else {
+                iconContainer.className = 'w-16 h-16 rounded-2xl mx-auto flex items-center justify-center text-3xl mb-4 bg-gradient-to-tr from-emerald-500 to-teal-600 text-white';
+                iconContainer.innerHTML = '<i class="fa-brands fa-whatsapp"></i>';
+            }
+
+            modal.classList.remove('hidden');
+
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 50);
+
+            redirectTimer = setTimeout(() => {
+                proceedRedirect();
+            }, 1000);
+        }
+
+        function proceedRedirect() {
+            if (redirectTimer) clearTimeout(redirectTimer);
+            if (redirectTargetUrl) {
+                window.open(redirectTargetUrl, '_blank');
+            }
+            cancelRedirect();
+        }
+
+        function cancelRedirect() {
+            if (redirectTimer) clearTimeout(redirectTimer);
+            document.getElementById('redirectModal').classList.add('hidden');
+            redirectTargetUrl = '';
+        }
+
+        // Background Particle Effect
+        function initParticles() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            const particles = [];
+            for (let i = 0; i < 40; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    color: Math.random() > 0.5 ? '#00f0ff' : '#a855f7',
+                    alpha: Math.random() * 0.4 + 0.1
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.alpha;
+                    ctx.fill();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // Init on Load
+        window.onload = function() {
+            loadSavedTheme();
+            initParticles();
+            renderGames();
+            loadSavedFeedbacks();
+            renderFeedbacks();
+        };
+    </script>
+
+    <!-- Animasi muncul saat scroll -->
+    <script>
+        (function () {
+            if (!('IntersectionObserver' in window)) return;
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('in-view');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.08 });
+            document.querySelectorAll('#catalog, #feedback, footer').forEach(function (t) {
+                t.classList.add('reveal');
+                io.observe(t);
+            });
+        })();
+    </script>
+</body>
+</html>
